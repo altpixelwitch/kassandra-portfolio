@@ -1,6 +1,6 @@
 import { unstable_cache } from 'next/cache'
 import { findBySlug, getPayloadClient } from '@/lib/payload'
-import type { Work } from '@/payload-types'
+import type { News, Work } from '@/payload-types'
 
 export const getHomepage = unstable_cache(
   async () => {
@@ -80,7 +80,7 @@ export const getPublishedNews = unstable_cache(
 
 export function getPublishedNewsBySlug(slug: string) {
   return unstable_cache(
-    () => findBySlug('news', slug, { depth: 2 }),
+    () => findBySlug<News>('news', slug, { depth: 2 }),
     ['published-news-by-slug-v1', slug],
     { tags: ['news-list', `news:${slug}`] },
   )()
