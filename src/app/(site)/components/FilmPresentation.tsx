@@ -51,7 +51,7 @@ export default function FilmPresentation({
             />
           )
         ) : (
-          <div className="works-card__empty">Image TBA</div>
+          <div className="works-card__empty" aria-hidden="true" />
         )}
       </div>
 
@@ -60,7 +60,7 @@ export default function FilmPresentation({
           {linkTitle && film.slug ? <Link href={filmHref}>{film.title}</Link> : film.title}
         </h2>
         <p className="works-card__meta">
-          {[film.year || 'TBA', film.type, film.status, film.duration].filter(Boolean).join(' · ')}
+          {[film.year, film.type, film.status, film.duration].filter(Boolean).join(' · ')}
         </p>
         {film.synopsis && <p className="works-card__lede">{film.synopsis}</p>}
         {film.description && <p>{film.description}</p>}

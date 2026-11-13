@@ -5907,3 +5907,34 @@ body:has(.contact-page__body) .contact-page__body {
     margin-inline: auto;
   }
 }
+
+/* ============================================================
+   Easier to tap. An invisible area around small controls makes them
+   finger-sized without moving anything on screen: the links in the
+   slide-out menu, and the footer icons on phones.
+   ============================================================ */
+.drawer__links a,
+.legal-footer__socials a {
+  position: relative;
+}
+
+.drawer__links a::before {
+  position: absolute;
+  inset: -10px -12px;
+  content: '';
+}
+
+@media (max-width: 700px) {
+  .legal-footer__socials a::before {
+    position: absolute;
+    inset: 0 -8px;
+    content: '';
+  }
+}
+
+/* Phones: the Profile heading has room to breathe below the film buttons */
+@media (max-width: 700px) {
+  main #profile.block {
+    padding-top: 40px;
+  }
+}
