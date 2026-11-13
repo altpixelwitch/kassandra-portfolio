@@ -1,0 +1,5909 @@
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+JP:wght@400;600&family=Noto+Serif+KR:wght@400;600&family=Noto+Serif+SC:wght@400;600&display=swap');
+@import 'tailwindcss';
+
+/* Kassandra's name and all text: Morpheus. Unused faces (Fette National Fraktur,
+   Deutsch Gothic, Space Grotesk) were removed so the page loads less; their font
+   files stay in public/fonts in case they are wanted again. */
+@font-face {
+  font-family: 'Morpheus';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Morpheus-Regular.ttf') format('truetype');
+}
+
+/* ============================================================
+   Kassandra Stanley Shostle
+   Three colours: warm black (main), oxblood, emerald.
+   Type: Morpheus for text and the name, Dela Gothic One for small labels.
+   To try another heading font, change --display below.
+   ============================================================ */
+
+:root {
+  color-scheme: dark;
+
+  --ink: #151311;
+  --ink-raised: #1e1a18;
+  --bone: #efe8dd;
+  --bone-dim: #b9b0a3;
+  --line: rgb(239 232 221 / 16%);
+
+  --oxblood: #3d0b12;
+  --oxblood-deep: #200407;
+  --oxblood-bright: #761725;
+
+  --emerald: #087f5b;
+  --emerald-deep: #034a36;
+  --emerald-bright: #50c878;
+
+  --display: 'Dela Gothic One', 'Arial Black', sans-serif;
+  /* Morpheus, the serif of Kassandra's name, is used for all the site's text.
+     It covers English and the Western European languages; Russian, Japanese,
+     Korean and Chinese fall back to serifs in the same spirit. */
+  --name:
+    'Morpheus', 'Cormorant Garamond', 'Noto Serif JP', 'Noto Serif KR', 'Noto Serif SC', Georgia,
+    'Times New Roman', serif;
+  --text: var(--name);
+
+  --radius: 44px;
+  --gutter: max(16px, 4vw);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--ink);
+  /* A soft oxblood glow at the top of the black */
+  background-image: radial-gradient(ellipse 120% 70% at 50% 0%, rgb(74 15 23 / 22%), transparent 60%);
+  background-attachment: fixed;
+}
+
+body {
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* The black and its glow are painted on <html>, so the particles can sit between them and the pages */
+  background: transparent;
+}
+
+/* Google Website Translator is loaded only after a visitor requests a translation. */
+html.translated-ltr body,
+html.translated-rtl body {
+  top: 0 !important;
+}
+
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+  display: none !important;
+}
+
+html.translated-ltr :is(h1, h2, h3, h4, p, a, button, dd, dt, li, span),
+html.translated-rtl :is(h1, h2, h3, h4, p, a, button, dd, dt, li, span) {
+  overflow-wrap: anywhere;
+}
+
+::selection {
+  background: var(--oxblood-bright);
+  color: var(--bone);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* No text cursor over ordinary text; it stays only where you can type */
+body {
+  cursor: default;
+}
+
+input,
+textarea,
+[contenteditable='true'] {
+  cursor: text;
+}
+
+/* Korean breaks lines between words, not in the middle of them */
+:lang(ko) {
+  word-break: keep-all;
+}
+
+a {
+  color: inherit;
+}
+
+/* Every link and button shows the rose instead of the hand */
+a,
+button,
+summary,
+[role='button'] {
+  cursor:
+    url('/dark-red-rose.png') 15 11,
+    pointer;
+}
+
+@keyframes interactive-jiggle {
+  0%,
+  100% {
+    translate: 0 0;
+    rotate: 0deg;
+  }
+
+  20% {
+    translate: -1px 0;
+    rotate: -0.45deg;
+  }
+
+  40% {
+    translate: 1px -1px;
+    rotate: 0.4deg;
+  }
+
+  60% {
+    translate: -1px 1px;
+    rotate: -0.3deg;
+  }
+
+  80% {
+    translate: 1px 0;
+    rotate: 0.2deg;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  :where(a[href], button:not(:disabled), summary, [role='button']):hover {
+    animation: interactive-jiggle 420ms ease-in-out both;
+  }
+}
+
+button:disabled {
+  cursor: default;
+}
+
+.name--kassandra {
+  font-family: var(--name);
+  text-transform: none;
+}
+
+/* Each language picks the serif that draws its own characters best */
+:root:lang(ja) {
+  --name:
+    'Morpheus', 'Cormorant Garamond', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia,
+    serif;
+}
+
+:root:lang(ko) {
+  --name:
+    'Morpheus', 'Cormorant Garamond', 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+}
+
+:root:lang(zh-CN) {
+  --name: 'Morpheus', 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+}
+
+/* Morpheus has one weight, so bold text is not smeared into a fake bold */
+body {
+  font-synthesis-weight: none;
+}
+
+/* ============================================================
+   The KASSANDRA / STANLEY SHOSTLE logo, identical everywhere.
+   Places that use it only set its overall size and position.
+   ============================================================ */
+
+.kass-logo {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--display);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 0.95;
+  text-align: center;
+  text-decoration: none;
+  text-wrap: nowrap;
+}
+
+.kass-logo > span {
+  display: block;
+  white-space: nowrap;
+  line-height: 0.95;
+}
+
+.kass-logo__first {
+  font-family: var(--name);
+  font-size: 1.4em;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.kass-logo__last {
+  margin-top: 0.42em;
+  color: var(--oxblood-bright);
+  font-family: var(--display);
+  font-size: 0.4496em;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.serpent-emblem {
+  position: relative;
+  display: block;
+  width: 0.72em;
+  max-width: 100%;
+  flex: 0 0 auto;
+  margin-top: 0.58em;
+  aspect-ratio: 468 / 1160;
+  line-height: 0;
+  pointer-events: none;
+}
+
+.serpent-emblem img {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+}
+
+.serpent-emblem__animated-art {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.serpent-emblem__serpent {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: serpent-climb 5.5s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  will-change: transform;
+}
+
+@keyframes serpent-climb {
+  0%,
+  100% {
+    transform: translate3d(0, -4%, 0) skewX(-0.8deg) scaleX(0.985);
+  }
+
+  25% {
+    transform: translate3d(1.2%, 0, 0) skewX(0.9deg) scaleX(1.015);
+  }
+
+  50% {
+    transform: translate3d(0, 4%, 0) skewX(-0.6deg) scaleX(0.99);
+  }
+
+  75% {
+    transform: translate3d(-1.2%, 0, 0) skewX(0.7deg) scaleX(1.01);
+  }
+}
+
+.serpent-emblem__reduced {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .serpent-emblem__animated-art {
+    display: none;
+  }
+
+  .serpent-emblem__serpent {
+    animation: none;
+  }
+
+  .serpent-emblem__reduced {
+    display: block !important;
+  }
+}
+
+.placeholder-tag,
+.section-title__kicker,
+.credits dt,
+.btn--primary,
+.profile__roles,
+.news__date,
+.news__item p,
+.contact__grid span,
+.footer,
+.menu__links small,
+.menu__foot,
+.preview__text small {
+  font-family: var(--text);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--emerald-bright);
+  outline-offset: 4px;
+}
+
+.flip {
+  transform: rotate(180deg);
+}
+
+.up {
+  transform: rotate(-90deg);
+}
+
+/* Small tag marking temporary assets for review */
+.placeholder-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgb(14 12 11 / 72%);
+  color: var(--bone-dim);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(4px);
+}
+
+/* ============================================================
+   Menu button
+   ============================================================ */
+
+.menu-button {
+  position: fixed;
+  top: clamp(18px, 2.8vw, 42px);
+  right: clamp(18px, 2.8vw, 42px);
+  z-index: 60;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-content: center;
+  gap: 3.8px;
+  border: 0;
+  border-radius: 12px;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  backdrop-filter: blur(8px);
+  transition: background-color 250ms ease;
+}
+
+.menu-button span {
+  display: block;
+  width: 13px;
+  height: 1.2px;
+  border-radius: 2px;
+  background: var(--emerald-bright);
+}
+
+.menu-button:hover {
+  background: rgb(239 232 221 / 8%);
+}
+
+/* Only keyboard users see a ring, a discreet emerald one */
+.menu-button:focus-visible,
+.works-page__menu:focus-visible {
+  outline: 2px solid var(--emerald-bright);
+  outline-offset: 3px;
+}
+
+.language-selector__button {
+  border-color: rgb(239 232 221 / 40%);
+  background: transparent;
+  color: var(--emerald-bright);
+}
+
+.language-selector__button:hover,
+.language-selector__button:focus-visible {
+  border-color: var(--bone);
+  background: rgb(239 232 221 / 8%);
+}
+
+.language-selector__code {
+  font-family: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* ============================================================
+   Hero: stills play inside a rounded frame
+   ============================================================ */
+
+.hero {
+  height: 100svh;
+  min-height: 560px;
+  padding: clamp(18px, 2.8vw, 42px);
+}
+
+.hero__frame {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 50px;
+  background: var(--ink-raised);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 40px 90px rgb(0 0 0 / 55%);
+}
+
+.hero__slides {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slides img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.06);
+  transition:
+    opacity 1.8s ease,
+    transform 7s ease-out;
+}
+
+.hero__slides img.is-active {
+  opacity: 1;
+  transform: scale(1);
+  animation: hero-drift 12s ease-in-out infinite alternate;
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@keyframes hero-drift {
+  from {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  to {
+    transform: scale(1.1) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+.hero__shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 50%, rgb(14 12 11 / 50%), transparent 75%),
+    linear-gradient(180deg, rgb(14 12 11 / 25%), rgb(14 12 11 / 10%) 40%, rgb(14 12 11 / 80%));
+}
+
+.hero__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  text-align: center;
+}
+
+/* Homepage name styled to match the entrance: same size, spacing and colours */
+.hero__name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.25rem, min(3.7vw, 6.3vh), 4.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #efe8dd;
+  text-shadow: 0 6px 30px rgb(14 12 11 / 75%);
+}
+
+.hero__name .serpent-emblem {
+  width: 0.82em;
+}
+
+@media (max-width: 640px) {
+  .hero__name {
+    font-size: min(5.6vw, 6.5vh);
+  }
+}
+
+.legal-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(28px, 5vw, 72px);
+  padding: clamp(22px, 3vw, 38px) var(--gutter);
+  border-top: 0;
+  color: var(--bone);
+  font-size: 11px;
+}
+
+.legal-footer__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.legal-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: clamp(12px, 2vw, 24px);
+}
+
+.legal-footer__contact span {
+  color: var(--emerald-bright);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.legal-footer__contact a {
+  color: var(--bone);
+  font-size: clamp(0.82rem, 1vw, 1rem);
+  letter-spacing: 0.08em;
+  overflow-wrap: anywhere;
+}
+
+.legal-footer p {
+  margin: 0;
+}
+
+.legal-footer__copy nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.legal-footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.legal-footer a:hover {
+  color: var(--bone);
+}
+
+.legal-footer__socials {
+  display: grid;
+  grid-template-columns: repeat(4, 52px);
+  align-items: center;
+  justify-content: end;
+  gap: 8px 12px;
+}
+
+.legal-footer__socials a {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--emerald-bright);
+}
+
+.legal-footer__socials .drawer__social-logo {
+  width: 24px;
+}
+
+.analytics-consent {
+  position: fixed;
+  z-index: 90;
+  right: 18px;
+  bottom: 18px;
+  width: min(440px, calc(100vw - 36px));
+  padding: 20px;
+  border: 1px solid var(--emerald-bright);
+  border-radius: 18px;
+  background: var(--ink);
+  color: var(--bone);
+  box-shadow: 0 20px 80px rgb(0 0 0 / 45%);
+}
+
+.analytics-consent p {
+  margin: 0 0 16px;
+  line-height: 1.5;
+}
+
+.analytics-consent div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.analytics-consent button {
+  min-height: 44px;
+  padding: 10px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--bone);
+}
+
+.analytics-consent button:last-child {
+  border-color: var(--emerald-bright);
+  background: var(--emerald);
+}
+
+.hero__roles {
+  position: absolute;
+  bottom: calc(max(8px, env(safe-area-inset-bottom, 0px)) + 2px);
+  left: 50%;
+  width: calc(100% - 48px);
+  max-width: 80ch;
+  margin: 0;
+  color: var(--bone);
+  font-size: clamp(8px, 0.72vw, 11px);
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  text-shadow: 0 2px 16px rgb(0 0 0 / 85%);
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.hero__nav {
+  position: absolute;
+  top: clamp(22px, 4vh, 40px);
+  bottom: auto;
+  left: 50%;
+  display: flex;
+  gap: clamp(24px, 6vw, 72px);
+  transform: translateX(-50%);
+}
+
+.hero__nav a {
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+  color: var(--bone);
+  font-size: 9.1px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-decoration: none;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgb(0 0 0 / 80%);
+  transition: border-color 200ms ease;
+}
+
+.hero__nav a:hover {
+  border-color: var(--oxblood-bright);
+}
+
+.hero__frame > .placeholder-tag {
+  top: 18px;
+  bottom: auto;
+  left: 18px;
+}
+
+/* ============================================================
+   Sections
+   ============================================================ */
+
+main {
+  padding-inline: clamp(20px, 5vw, 72px);
+}
+
+.block {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-top: clamp(130px, 14vw, 220px);
+}
+
+.block--narrow {
+  max-width: 900px;
+}
+
+#works {
+  max-width: none;
+  margin-inline: calc(clamp(18px, 2.8vw, 42px) - clamp(20px, 5vw, 72px));
+  padding-top: clamp(32px, 4vw, 56px);
+}
+
+#news {
+  padding-top: calc(clamp(130px, 14vw, 220px) - 1in);
+}
+
+.section-title {
+  margin-bottom: clamp(54px, 7vw, 90px);
+  text-align: center;
+}
+
+#works .section-title {
+  margin-bottom: 28px;
+  transform: translateY(-10%);
+}
+
+.section-title__kicker {
+  margin: 0 0 12px;
+  color: var(--emerald-bright);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.section-title h2 {
+  margin: 0;
+  font-family: var(--name);
+  font-size: clamp(2rem, 3.2vw, 2.8rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--bone);
+}
+
+/* Small mark under each heading: oxblood dash, emerald dot */
+.section-title__ornament {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.section-title__ornament i {
+  width: 36px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--oxblood-bright);
+}
+
+.section-title__ornament b {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald-bright);
+}
+
+/* Colour panels: oxblood and emerald, always separated by black */
+/* Calm sections: no coloured blocks. Oxblood and emerald appear as a soft glow behind each image. */
+.panel {
+  position: relative;
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem);
+  font-weight: 500;
+  line-height: 1.55;
+  color: var(--bone);
+}
+
+.label-heading {
+  margin: 0 0 6px;
+  font-family: var(--name);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.label-heading:not(:first-child) {
+  margin-top: 34px;
+}
+
+/* ---------- Featured work ---------- */
+
+.work {
+  display: grid;
+  gap: clamp(42px, 7vw, 92px);
+  align-items: center;
+}
+
+.work > * {
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .work {
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  }
+}
+
+.work__poster {
+  position: relative;
+  top: -30px;
+  max-width: 100%;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 50px;
+  background: var(--oxblood-deep);
+  box-shadow:
+    0 0 0 1px rgb(163 40 58 / 35%),
+    0 30px 120px rgb(122 24 38 / 45%);
+}
+
+.work__poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.8);
+}
+
+.work__poster-empty,
+.work-empty {
+  display: grid;
+  min-height: 260px;
+  place-items: center;
+  color: var(--bone-dim);
+  text-align: center;
+}
+
+.work-empty {
+  gap: 24px;
+  align-content: center;
+}
+
+.work__poster figcaption {
+  position: absolute;
+  inset: auto 0 0;
+  padding: 64px 24px 22px;
+  background: linear-gradient(180deg, transparent, rgb(20 4 7 / 92%));
+}
+
+.work__poster-title {
+  display: block;
+  font-family: var(--name);
+  font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--bone);
+}
+
+.work__poster-credit {
+  display: block;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.work__info p {
+  margin: 10px 0 0;
+}
+
+.work__eyebrow {
+  color: var(--emerald-bright);
+  font-family: var(--text);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.work__title {
+  max-width: 12ch;
+  margin: 12px 0 38px;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 0.94;
+  text-transform: uppercase;
+}
+
+.awards {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.awards li {
+  position: relative;
+  padding: 9px 0 9px 22px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 600;
+}
+
+.awards li::before {
+  position: absolute;
+  top: 19px;
+  left: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald-bright);
+  content: '';
+}
+
+.credits {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px 24px;
+  margin: 34px 0 0;
+  padding: 22px 0;
+  border-block: 1px solid var(--line);
+}
+
+.credits dt {
+  color: var(--emerald-bright);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.credits dd {
+  margin: 4px 0 0;
+  font-weight: 700;
+}
+
+/* ---------- Buttons ---------- */
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    transform 250ms ease;
+}
+
+.btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.btn--primary {
+  background: var(--bone);
+  color: var(--oxblood);
+}
+
+.btn--primary:hover {
+  background: var(--emerald-bright);
+  color: var(--emerald-deep);
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  border-color: rgb(239 232 221 / 40%);
+  color: var(--bone);
+}
+
+.btn--ghost:hover {
+  border-color: var(--bone);
+  background: rgb(239 232 221 / 10%);
+  transform: translateY(-2px);
+}
+
+.square-btn {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--bone);
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease;
+}
+
+.square-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.square-btn:hover {
+  border-color: var(--oxblood-bright);
+  background: var(--oxblood);
+}
+
+/* ---------- Stills ---------- */
+
+.rushes__track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  border-radius: var(--radius);
+}
+
+.rushes__track::-webkit-scrollbar {
+  display: none;
+}
+
+.rushes__track figure {
+  position: relative;
+  flex: 0 0 min(82%, 820px);
+  max-width: 100%;
+  margin: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 20px;
+  scroll-snap-align: start;
+  background: var(--ink-raised);
+}
+
+.rushes__track img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rushes__controls {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+/* ---------- Profile ---------- */
+
+.profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(38px, 5vw, 64px);
+  align-items: center;
+  justify-items: center;
+}
+
+.profile > * {
+  min-width: 0;
+}
+
+@media (min-width: 900px) {
+  .profile {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .profile__photo {
+    width: min(100%, 520px);
+    justify-self: center;
+  }
+}
+
+.profile__text {
+  width: min(100%, 760px);
+  margin-inline: auto;
+  text-align: center;
+}
+
+.profile__text .button-row {
+  justify-content: center;
+}
+
+.profile__photo {
+  position: relative;
+  isolation: isolate;
+  width: min(100%, 520px);
+  max-width: 100%;
+  justify-self: center;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.profile__photo-window {
+  position: absolute;
+  z-index: 0;
+  top: 18.6%;
+  left: 22.4%;
+  display: block;
+  width: 55.2%;
+  height: 62.8%;
+  overflow: hidden;
+  background: var(--ink-raised);
+}
+
+.profile__photo-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 100% 50%;
+}
+
+.profile__portrait--top {
+  object-position: center top !important;
+}
+
+.profile__portrait--bottom {
+  object-position: center bottom !important;
+}
+
+.profile__frame {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(0 26px 38px rgb(0 0 0 / 42%));
+}
+
+.profile__name {
+  margin: 0;
+  font-family: var(--name);
+  font-size: clamp(2rem, 3.6vw, 3.4rem);
+  font-weight: 400;
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: var(--bone);
+}
+
+.profile__roles {
+  margin: 14px 0 0;
+  color: var(--emerald-bright);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.profile__text p:not(.profile__roles) {
+  margin: 16px 0 0;
+}
+
+.profile__text .lede {
+  margin-top: 24px;
+}
+
+.profile__name--logo {
+  margin-inline: auto;
+  font-size: clamp(2rem, 4.4vw, 4.5rem);
+}
+
+@media (min-width: 900px) {
+  .profile--home {
+    grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+    gap: clamp(42px, 7vw, 92px);
+    justify-items: stretch;
+  }
+
+  .profile--home .profile__text {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+  }
+
+  .profile--home .profile__name--logo {
+    margin-inline: 0;
+  }
+
+  .profile--home .profile__photo {
+    grid-column: 2;
+    justify-self: end;
+  }
+}
+
+/* ---------- News ---------- */
+
+.news {
+  margin-top: calc(-0.5in + 20px);
+  border-top: 1px solid var(--line);
+}
+
+.news__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.news__item summary {
+  display: grid;
+  grid-template-columns: 110px 1fr 22px;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 4px;
+  list-style: none;
+}
+
+.news__date {
+  color: var(--emerald-bright);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.news__title {
+  font-weight: 600;
+  transition: color 200ms ease;
+}
+
+.news__chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--emerald-bright);
+  transform: rotate(90deg);
+  transition: transform 250ms ease;
+}
+
+.news__item[open] .news__chevron {
+  transform: rotate(-90deg);
+}
+
+.news__item summary:hover .news__title {
+  color: var(--emerald-bright);
+}
+
+.news__item p {
+  margin: 0;
+  padding: 0 4px 22px 132px;
+  color: var(--bone-dim);
+}
+
+@media (max-width: 600px) {
+  .news__item summary {
+    grid-template-columns: 1fr 22px;
+    gap: 4px 12px;
+  }
+
+  .news__date,
+  .news__title {
+    grid-column: 1;
+  }
+
+  .news__chevron {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+  }
+
+  .news__item p {
+    padding-left: 4px;
+  }
+}
+
+/* ---------- Contact ---------- */
+
+.contact {
+  text-align: center;
+}
+
+.contact__email {
+  display: inline-block;
+  font-family: var(--name);
+  font-size: clamp(1.4rem, 4.2vw, 3rem);
+  color: var(--bone);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 250ms ease;
+}
+
+.contact__email:hover {
+  color: var(--oxblood-bright);
+}
+
+.contact__grid {
+  display: grid;
+  gap: 22px;
+  margin-top: 64px;
+  padding-top: 38px;
+  border-top: 1px solid var(--line);
+}
+
+@media (min-width: 640px) {
+  .contact__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.contact__grid p {
+  margin: 0;
+  font-weight: 600;
+}
+
+.contact__grid span {
+  display: block;
+  color: var(--emerald-bright);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.contact__grid a:hover {
+  color: var(--oxblood-bright);
+}
+
+/* ---------- Footer & back to top ---------- */
+
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: clamp(110px, 14vw, 200px);
+  padding: 26px var(--gutter);
+  border-top: 1px solid var(--line);
+  color: var(--bone-dim);
+  font-size: 14px;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.to-top {
+  position: fixed;
+  right: max(14px, 2.4vw);
+  bottom: max(14px, 2.4vw);
+  z-index: 50;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--oxblood);
+  color: var(--bone);
+  box-shadow: 0 0 0 1px var(--oxblood-bright);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease,
+    background-color 250ms ease;
+}
+
+.to-top svg {
+  width: 22px;
+  height: 22px;
+}
+
+.to-top:hover {
+  background: var(--emerald);
+}
+
+.to-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+/* ============================================================
+   Full-screen menu
+   ============================================================ */
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  padding: max(18px, 3vw);
+  background:
+    radial-gradient(ellipse 60% 80% at 100% 0%, rgb(8 127 91 / 38%), transparent 68%), var(--ink);
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 800ms cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.menu.is-open {
+  clip-path: inset(0 0 0 0);
+}
+
+.menu__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.menu__body {
+  display: grid;
+  min-height: 0;
+  flex: 1;
+  grid-template-columns: minmax(240px, 0.8fr) minmax(340px, 1.2fr);
+  gap: clamp(28px, 5vw, 80px);
+  padding-block: clamp(24px, 4vh, 48px);
+}
+
+.menu__visual {
+  position: relative;
+  min-height: 0;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--ink-raised);
+}
+
+.menu__visual::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgb(14 12 11 / 82%));
+  content: '';
+  pointer-events: none;
+}
+
+.menu__visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: saturate(0.72) contrast(1.04);
+  transform: scale(1.035);
+  transition:
+    opacity 450ms ease,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.menu__visual img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.menu__visual figcaption {
+  position: absolute;
+  z-index: 1;
+  right: 18px;
+  bottom: 17px;
+  left: 18px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--bone);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.menu__visual figcaption span {
+  color: var(--oxblood-bright);
+}
+
+.menu__name {
+  font-family: var(--name);
+  font-size: clamp(1rem, 2.4vw, 1.5rem);
+  text-transform: uppercase;
+}
+
+.menu__close {
+  padding: 12px 20px;
+  border: 1px solid rgb(239 232 221 / 40%);
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.menu__close:hover {
+  border-color: var(--oxblood-bright);
+  background: var(--oxblood);
+}
+
+.menu__links {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid var(--line);
+}
+
+.menu__links a {
+  display: grid;
+  grid-template-columns: 34px 1fr 22px;
+  align-items: center;
+  gap: 16px;
+  padding-block: clamp(13px, 2.2vh, 25px);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--name);
+  font-size: clamp(1.82rem, 5.6vw, 4.48rem);
+  line-height: 1.05;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 250ms ease;
+}
+
+.menu__links small {
+  font-family: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--emerald-bright);
+}
+
+.menu__links svg {
+  width: 20px;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition:
+    opacity 250ms ease,
+    transform 250ms ease;
+}
+
+.menu__links a:hover {
+  color: var(--oxblood-bright);
+}
+
+.menu__links a:hover svg,
+.menu__links a:focus-visible svg {
+  opacity: 1;
+  transform: none;
+}
+
+.menu__bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.menu__foot {
+  margin: 0;
+  color: var(--emerald-bright);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.menu__socials {
+  display: flex;
+  max-width: min(72vw, 820px);
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.menu__socials a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--bone);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.menu__socials svg {
+  width: 28px;
+  height: 28px;
+  padding: 6px;
+  border: 1px solid rgb(239 232 221 / 28%);
+  color: var(--bone);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.menu__socials a:hover svg {
+  border-color: var(--oxblood-bright);
+  background: var(--oxblood);
+}
+
+@media (max-width: 760px) {
+  .menu__body {
+    grid-template-rows: minmax(130px, 28vh) 1fr;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding-block: 20px;
+  }
+
+  .menu__links a {
+    padding-block: 10px;
+    font-size: clamp(1.7rem, 9vw, 2.8rem);
+  }
+
+  .menu__bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .menu__foot {
+    display: none;
+  }
+
+  .menu__socials {
+    display: grid;
+    width: 100%;
+    max-width: none;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px 6px;
+  }
+
+  .menu__socials a {
+    flex-direction: column;
+    gap: 5px;
+    font-size: 7px;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   Right-side navigation drawer
+   ============================================================ */
+
+.drawer-backdrop {
+  position: fixed;
+  z-index: 80;
+  inset: 0;
+  background: rgb(8 8 7 / 0%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    background-color 520ms ease,
+    opacity 520ms ease;
+}
+
+.drawer-backdrop.is-open {
+  background: rgb(8 8 7 / 34%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  width: clamp(340px, 27vw, 420px);
+  height: 100dvh;
+  flex-direction: column;
+  padding: clamp(24px, 2.5vw, 36px);
+  background: #11100f;
+  color: var(--bone);
+  box-shadow: -18px 0 48px rgb(0 0 0 / 20%);
+  transform: translateX(100%);
+  transition: transform 720ms cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+.drawer-backdrop.is-open .drawer {
+  transform: translateX(0);
+}
+
+.drawer__top {
+  position: relative;
+  min-height: clamp(82px, 12vw, 112px);
+  padding-top: 4px;
+}
+
+.drawer__name {
+  max-width: calc(100% - 38px);
+  font-size: clamp(2rem, 3.8vw, 3.5rem);
+}
+
+.drawer__close {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: 22px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.drawer__close span {
+  transform: translateY(-1px);
+}
+
+.drawer__close:hover,
+.drawer__close:focus-visible {
+  color: var(--oxblood-bright);
+}
+
+.drawer__links {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 48px);
+  padding-block: 34px;
+}
+
+.drawer__links a {
+  position: relative;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(16px, 1.15vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 220ms ease,
+    transform 220ms ease;
+}
+
+.drawer__links a::after {
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  width: 24px;
+  height: 1px;
+  background: var(--oxblood-bright);
+  content: '';
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms ease;
+}
+
+.drawer__links a:hover,
+.drawer__links a:focus-visible {
+  color: var(--oxblood-bright);
+  outline: none;
+  transform: translateX(4px);
+}
+
+.drawer__links a:hover::after,
+.drawer__links a:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.drawer__bottom {
+  padding-top: 16px;
+  border-top: 1px solid rgb(239 232 221 / 14%);
+}
+
+/* Social icons: centred under the menu, in emerald */
+.drawer__socials {
+  display: grid;
+  width: min(100%, 280px);
+  margin-inline: auto;
+  grid-template-columns: repeat(7, minmax(0, 28px));
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(2px, 1vw, 8px);
+}
+
+.drawer__socials a {
+  display: grid;
+  width: 100%;
+  aspect-ratio: 1;
+  place-items: center;
+  color: var(--emerald);
+  text-decoration: none;
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.drawer__socials a:hover,
+.drawer__socials a:focus-visible {
+  color: var(--oxblood-bright);
+  outline: none;
+  transform: translateY(-2px);
+}
+
+.drawer__social-logo {
+  display: block;
+  width: min(18px, 72%);
+  aspect-ratio: 1;
+  background: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+
+.drawer__social-logo[data-icon='instagram'] {
+  mask-image: url('/brand/instagram.svg');
+  -webkit-mask-image: url('/brand/instagram.svg');
+}
+
+.drawer__social-logo[data-icon='vimeo'] {
+  mask-image: url('/brand/vimeo.svg');
+  -webkit-mask-image: url('/brand/vimeo.svg');
+}
+
+.drawer__social-logo[data-icon='youtube'] {
+  mask-image: url('/brand/youtube.svg');
+  -webkit-mask-image: url('/brand/youtube.svg');
+}
+
+.drawer__social-logo[data-icon='imdb'] {
+  mask-image: url('/brand/imdb.svg');
+  -webkit-mask-image: url('/brand/imdb.svg');
+}
+
+.drawer__social-logo[data-icon='letterboxd'] {
+  mask-image: url('/brand/letterboxd.svg');
+  -webkit-mask-image: url('/brand/letterboxd.svg');
+}
+
+.drawer__social-logo[data-icon='stage32'] {
+  mask-image: url('/brand/stage32.svg');
+  -webkit-mask-image: url('/brand/stage32.svg');
+}
+
+.drawer__social-logo[data-icon='x'] {
+  mask-image: url('/brand/x.svg');
+  -webkit-mask-image: url('/brand/x.svg');
+}
+
+.drawer__social-logo[data-icon='message'] {
+  mask-image: url('/brand/message.svg');
+  -webkit-mask-image: url('/brand/message.svg');
+}
+
+/* ============================================================
+   Homepage closing frame
+   ============================================================ */
+
+.cinematic-footer {
+  width: 100%;
+  margin-top: clamp(120px, 18vw, 280px);
+  padding: clamp(56px, 7vw, 104px) max(clamp(20px, 4vw, 72px), env(safe-area-inset-left, 0px))
+    clamp(30px, 3vw, 44px);
+  padding-right: max(clamp(20px, 4vw, 72px), env(safe-area-inset-right, 0px));
+  padding-left: max(clamp(20px, 4vw, 72px), env(safe-area-inset-left, 0px));
+  overflow: hidden;
+  border-top: 1px solid rgb(80 200 120 / 32%);
+  background: var(--ink);
+  color: var(--bone);
+}
+
+.cinematic-footer__logo {
+  margin-inline: auto;
+  font-size: clamp(1.175rem, 6.5vw, 7.5rem);
+}
+
+@media (max-width: 700px) {
+  .cinematic-footer {
+    margin-top: clamp(90px, 24vw, 130px);
+    padding-right: max(20px, env(safe-area-inset-right, 0px));
+    padding-left: max(20px, env(safe-area-inset-left, 0px));
+  }
+
+  .legal-footer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .legal-footer__socials {
+    justify-self: end;
+  }
+}
+
+@keyframes cinematic-footer-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .cinematic-footer__logo {
+    animation: cinematic-footer-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 30%;
+  }
+
+  .cinematic-footer__logo {
+    animation-range: entry 5% cover 38%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-footer__logo {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .drawer {
+    width: min(420px, 70vw);
+    min-width: 340px;
+  }
+}
+
+@media (max-width: 640px) {
+  .drawer {
+    width: 84vw;
+    min-width: 0;
+    padding: 24px;
+  }
+
+  .drawer__links {
+    gap: clamp(26px, 5vh, 38px);
+  }
+}
+
+@media (max-width: 899px) {
+  .block {
+    padding-top: clamp(100px, 24vw, 140px);
+  }
+
+  #news {
+    padding-top: calc(clamp(100px, 24vw, 140px) - 1in);
+  }
+
+  .section-title {
+    margin-bottom: 46px;
+  }
+
+  .work__title {
+    margin-bottom: 30px;
+  }
+
+  .profile__photo {
+    width: min(100%, 560px);
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #works {
+    margin-inline: -6px;
+  }
+
+  .menu-button {
+    top: 14px;
+    right: 14px;
+  }
+
+  .hero {
+    padding: 14px;
+  }
+
+  .hero__frame {
+    border-radius: 32px;
+  }
+
+  main {
+    padding-inline: 20px;
+  }
+
+  .work__poster {
+    aspect-ratio: 5 / 4;
+    border-radius: 32px;
+  }
+}
+
+/* ============================================================
+   Trailer placeholder
+   ============================================================ */
+
+.preview {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgb(14 12 11 / 95%);
+}
+
+.preview__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.preview__box {
+  position: relative;
+  width: min(100%, 1100px);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 1px var(--line);
+}
+
+.preview__box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.preview__text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.preview__play {
+  display: grid;
+  width: 76px;
+  height: 76px;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: var(--oxblood);
+  color: var(--bone);
+  font-size: 22px;
+  box-shadow: 0 0 0 1px var(--oxblood-bright);
+}
+
+.preview__text p {
+  margin: 0;
+  font-family: var(--name);
+  font-size: clamp(1.8rem, 5vw, 3.6rem);
+  text-transform: uppercase;
+}
+
+.preview__text small {
+  margin-top: 8px;
+  color: var(--emerald-bright);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Botanical entrance. Fonts load from index.css. */
+
+.garden {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  overflow: hidden;
+}
+
+.garden:has(+ .site #home:target) {
+  display: none;
+}
+
+/* The layer holding the black, the name and the garden */
+.garden__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  overflow: hidden;
+  color: #efe8dd;
+}
+
+.garden__layer::before {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  content: '';
+}
+
+/* Once Enter is pressed the black is painted by the veil, which can open like an iris */
+.garden.is-growing .garden__layer::before {
+  display: none;
+}
+
+.garden__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100vw;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px max(16px, 3vw);
+}
+
+.garden__title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.25rem, min(3.7vw, 6.3vh), 4.5rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-transform: uppercase;
+  color: #efe8dd;
+  user-select: none;
+}
+
+.garden__line {
+  display: block;
+  white-space: nowrap;
+}
+
+/* "Kassandra" in Morpheus (the font is loaded in index.css) */
+.garden__line--kassandra,
+.garden__line:first-child {
+  font-family: var(--name);
+  font-size: 1.4em; /* the same as the homepage, so the name lands on it exactly */
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* Surname: Dela Gothic in capitals, matching the homepage */
+.garden__line + .garden__line {
+  align-self: center;
+  margin-top: 0.42em;
+  font-family: var(--display);
+  font-size: 0.4496em;
+  color: var(--oxblood-bright);
+  transform: translateY(0.5px);
+}
+
+.garden__word {
+  display: inline-block;
+}
+
+.garden__word + .garden__word {
+  margin-left: 0.28em;
+}
+
+.garden__letter {
+  display: inline-block;
+}
+
+.garden__emblem {
+  width: 0.82em;
+  font-size: clamp(1.25rem, min(3.7vw, 6.3vh), 4.5rem);
+  margin-top: clamp(18px, 2.5vh, 28px);
+}
+
+/* Enter: plain white lettering with a small oxblood dot either side */
+.garden__enter {
+  position: absolute;
+  bottom: max(clamp(24px, 4vh, 44px), env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1em;
+  margin: 0;
+  padding: 6px 4px;
+  border: 0;
+  background: none;
+  color: #ffffff;
+  font-family: var(--name);
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-indent: 0.34em;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  cursor:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 16c-.2 5-2.5 9.2-6.5 13' fill='none' stroke='%231b6b50' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M12 23c-3-1.5-4.7.4-4.8 2.4 2.8.3 4.5-.6 5.6-2.1' fill='%230b3d2e'/%3E%3Cpath d='M16 5c2.8-3.3 7.1-1.3 6.8 2.6 4.2.2 5.1 4.6 1.8 7-1 4-5.2 5.1-8.2 2.7-3 3-7.7 1.3-7.9-2.6-4-1.5-3.2-6.2.6-7C9.3 3.8 13.3 2 16 5Z' fill='%23761725' stroke='%23430a13' stroke-width='.8'/%3E%3Cpath d='M16 7c2-2 4.7-.2 3.8 2.2 2.8-.2 3.5 2.8 1.3 4.2-.4 2.5-3.2 2.7-4.7 1-1.8 1.7-4.4.3-3.8-2.1-2.2-1.3-.9-4 1.4-3.7.2-1.2.9-1.8 2-1.6Z' fill='%23912a38'/%3E%3Ccircle cx='16.2' cy='11.2' r='1.6' fill='%23430a13'/%3E%3C/svg%3E")
+      16 12,
+    default;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* A layered rose cursor replaces the standard hand over Enter. */
+.garden__enter {
+  cursor:
+    url('/dark-red-rose.png') 15 11,
+    default;
+}
+
+.garden__enter::before,
+.garden__enter::after {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--oxblood-bright);
+  content: '';
+  transition: transform 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hover: the dots ease outwards a touch */
+.garden__enter:hover::before,
+.garden__enter:focus-visible::before {
+  transform: translateX(-3px);
+}
+
+.garden__enter:hover::after,
+.garden__enter:focus-visible::after {
+  transform: translateX(3px);
+}
+
+/* Keyboard focus is shown by the dots easing outwards, so no box appears around Enter */
+.garden__enter:focus-visible {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garden__enter::before,
+  .garden__enter::after {
+    transition: none;
+  }
+}
+
+/* ---------- The garden ---------- */
+
+/* The black behind the name. After the garden has grown back into the name it
+   opens out from the name like an iris onto the homepage. */
+.garden__veil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+.garden__inner {
+  z-index: 1;
+}
+
+/* Vines, leaves and roses, drawn over the name so they grow out of the letters */
+.garden__canvas {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.garden__title {
+  will-change: transform, opacity;
+}
+
+.garden.is-growing .garden__enter {
+  visibility: hidden;
+}
+
+.figma-custom-code-fragment {
+  display: contents;
+}
+.figma-bypass-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 2147483647;
+  transform: translateY(-150%);
+  border-radius: 6px;
+  background: #111827;
+  color: #fff;
+  padding: 8px 12px;
+  font:
+    600 14px/1.2 system-ui,
+    sans-serif;
+  text-decoration: none;
+}
+.figma-bypass-link:focus {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   Works archive
+   ============================================================ */
+
+.works-page {
+  min-height: 100svh;
+  padding: clamp(18px, 2.8vw, 42px);
+}
+
+.works-page__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 40px);
+  padding: 8px 4px;
+}
+
+.works-page__name {
+  font-size: clamp(1.8rem, 4vw, 4rem);
+}
+
+.works-page__actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(10px, 1.4vw, 16px);
+}
+
+.works-page__menu {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-content: center;
+  gap: 3.8px;
+  border: 0;
+  border-radius: 12px;
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color 250ms ease;
+}
+
+.works-page__menu span {
+  display: block;
+  width: 13px;
+  height: 1.2px;
+  border-radius: 2px;
+  background: var(--emerald-bright);
+}
+
+.works-page__menu:hover {
+  background: rgb(239 232 221 / 8%);
+}
+
+.works-page__back {
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--emerald-bright);
+  color: var(--bone);
+  font-family: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.works-page__intro {
+  padding: clamp(90px, 13vw, 180px) 0 clamp(60px, 9vw, 120px);
+  text-align: center;
+}
+
+.works-page__intro p,
+.works-page__intro span {
+  margin: 0;
+  color: var(--emerald-bright);
+  font-family: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.works-page__intro h1 {
+  margin: 16px 0 22px;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(3.5rem, 11vw, 9rem);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 0.85;
+  text-transform: uppercase;
+}
+
+.works-page__intro span {
+  color: var(--bone-dim);
+  font-size: 9px;
+}
+
+.works-grid {
+  display: grid;
+  gap: clamp(90px, 13vw, 180px);
+}
+
+.works-card {
+  display: grid;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: clamp(32px, 6vw, 88px);
+}
+
+.works-card__poster {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 50px;
+  background: var(--oxblood-deep);
+  box-shadow: 0 30px 120px rgb(122 24 38 / 32%);
+}
+
+.works-card__poster img,
+.works-card__gallery img {
+  object-fit: cover;
+}
+
+.works-card__poster > a {
+  position: absolute;
+  inset: 0;
+}
+
+.works-card__empty {
+  display: grid;
+  height: 100%;
+  min-height: 420px;
+  place-items: center;
+  color: var(--bone-dim);
+  font-family: var(--text);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.works-card__body {
+  align-self: center;
+}
+
+.works-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--emerald-bright);
+  font-family: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.works-card h2 {
+  margin: 18px 0 26px;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(2.2rem, 5vw, 5.2rem);
+  font-weight: 400;
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.works-card h2 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 250ms ease;
+}
+
+.works-card h2 a:hover {
+  color: var(--oxblood-bright);
+}
+
+.works-card__body > p {
+  margin: 16px 0 0;
+  color: var(--bone-dim);
+}
+
+.works-card__body .works-card__lede {
+  color: var(--bone);
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem);
+  line-height: 1.55;
+}
+
+.works-card__credits {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 34px 0 0;
+  padding: 24px 0;
+  border-block: 1px solid var(--line);
+}
+
+.works-card__credits dt {
+  color: var(--emerald-bright);
+  font-family: var(--text);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.works-card__credits dd {
+  margin: 5px 0 0;
+  color: var(--bone);
+}
+
+.works-card__awards {
+  margin: 26px 0 0;
+  padding-left: 18px;
+  color: var(--bone-dim);
+}
+
+.works-card__trailer {
+  display: inline-block;
+  margin-top: 30px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--oxblood-bright);
+  color: var(--bone);
+  font-family: var(--text);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.works-card__video {
+  width: 100%;
+  margin-top: 30px;
+  border-radius: 18px;
+  background: #000;
+}
+
+.works-card__gallery {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 28px);
+}
+
+.works-card__gallery figure {
+  margin: 0;
+}
+
+.works-card__gallery figure > div {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 28px;
+  background: var(--ink-raised);
+}
+
+.works-card__gallery figcaption {
+  margin-top: 9px;
+  color: var(--bone-dim);
+  font-family: var(--text);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
+.works-page__empty {
+  display: grid;
+  min-height: 46vh;
+  place-content: center;
+  gap: 8px;
+  border-block: 1px solid var(--line);
+  text-align: center;
+}
+
+.works-page__empty p {
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.works-page__empty span {
+  color: var(--bone-dim);
+  font-family: var(--text);
+  font-size: 11px;
+}
+
+.works-page__intro--detail h1 {
+  max-width: 1100px;
+  margin-inline: auto;
+  font-size: clamp(3rem, 9vw, 8rem);
+}
+
+.inner-page {
+  padding-bottom: clamp(70px, 10vw, 140px);
+}
+
+.inner-page > .panel {
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.contact-page__body {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: clamp(40px, 7vw, 90px);
+  border-radius: 50px;
+  background: var(--oxblood-deep);
+  box-shadow: 0 30px 120px rgb(122 24 38 / 25%);
+}
+
+.contact-page__lede {
+  max-width: 720px;
+  margin: 0 auto clamp(40px, 6vw, 72px);
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(1.5rem, 3.8vw, 3rem);
+  line-height: 1.18;
+}
+
+.contact-page__links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+}
+
+.contact-page__links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--bone);
+  font-family: var(--text);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 250ms ease;
+}
+
+.contact-page__links a:nth-child(odd) {
+  padding-right: 24px;
+}
+
+.contact-page__links a:nth-child(even) {
+  padding-left: 24px;
+}
+
+.contact-page__links a:hover {
+  color: var(--emerald-bright);
+}
+
+.contact-page__methods {
+  display: grid;
+  gap: 1px;
+  margin-bottom: clamp(48px, 7vw, 80px);
+  background: var(--line);
+}
+
+.contact-page__methods a {
+  display: grid;
+  gap: 8px;
+  padding: 24px;
+  background: var(--oxblood-deep);
+  color: var(--bone);
+  text-decoration: none;
+}
+
+.contact-page__methods span,
+.contact-form label,
+.news-card time,
+.news-detail time,
+.award-card > p {
+  color: var(--emerald-bright);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contact-page__methods strong {
+  overflow-wrap: anywhere;
+  font-family: var(--name);
+  font-size: clamp(1.15rem, 3vw, 2rem);
+  font-weight: 400;
+}
+
+.contact-page__form {
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: left;
+}
+
+.contact-page__form h2,
+.contact-form__success h2 {
+  margin: 0 0 8px;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 400;
+}
+
+.contact-page__form > p,
+.contact-page__empty,
+.contact-page__privacy {
+  color: var(--bone-dim);
+}
+
+.contact-form {
+  display: grid;
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.contact-form__field {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgb(21 19 17 / 70%);
+  color: var(--bone);
+  font: inherit;
+  padding: 14px 16px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: var(--emerald-bright);
+  outline: 2px solid transparent;
+}
+
+.contact-form__error {
+  color: #ffb4b4;
+  font-size: 0.85rem;
+}
+
+.contact-form__error--form {
+  margin: 0;
+}
+
+.contact-form__honeypot {
+  position: absolute;
+  left: -10000px;
+}
+
+.contact-form__success {
+  padding: 30px;
+  border: 1px solid var(--emerald-bright);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.contact-page__privacy {
+  margin: 52px 0 0;
+  font-size: 0.82rem;
+  text-align: center;
+}
+
+.contact-page__privacy a {
+  color: var(--bone);
+}
+
+.contact-page__preview-note,
+.preview-banner {
+  border: 1px solid var(--emerald-bright);
+  border-radius: 999px;
+  color: var(--emerald-bright);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.contact-page__preview-note {
+  padding: 14px 18px;
+  text-align: center;
+}
+
+.preview-banner {
+  width: fit-content;
+  margin: 40px auto;
+  padding: 10px 16px;
+}
+
+.preview-banner--fixed {
+  position: fixed;
+  z-index: 60;
+  bottom: 18px;
+  left: 50%;
+  margin: 0;
+  background: var(--ink);
+  transform: translateX(-50%);
+}
+
+.awards-page__grid,
+.news-page__grid {
+  display: grid;
+  max-width: 1440px;
+  margin: 0 auto;
+  gap: 24px;
+}
+
+.awards-page__grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.award-card {
+  min-height: 360px;
+  padding: clamp(30px, 5vw, 64px);
+  border: 1px solid var(--line);
+  border-radius: 42px;
+  background: var(--ink-raised);
+}
+
+.award-card__laurel {
+  position: relative;
+  width: 120px;
+  height: 90px;
+  margin-bottom: 28px;
+}
+
+.award-card__laurel img {
+  object-fit: contain;
+  object-position: left center;
+}
+
+.award-card h2,
+.news-card h2 {
+  margin: 16px 0;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(1.8rem, 4vw, 3.8rem);
+  font-weight: 400;
+  line-height: 0.95;
+}
+
+/* A lighter oxblood so the small recognition label is readable (WCAG AA) */
+.award-card h3 {
+  color: #db6b7e;
+  font-family: var(--name);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.award-card__result,
+.award-card span,
+.news-card p {
+  color: var(--bone-dim);
+}
+
+.award-card a,
+.news-card h2 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.news-page__grid {
+  gap: clamp(48px, 8vw, 100px);
+}
+
+.news-card {
+  display: grid;
+  align-items: center;
+  gap: clamp(30px, 6vw, 80px);
+}
+
+.news-card__image {
+  position: relative;
+  min-height: 420px;
+  overflow: hidden;
+  border-radius: 42px;
+}
+
+.news-card__image img,
+.news-detail__image img {
+  object-fit: cover;
+}
+
+.news-detail {
+  max-width: 1100px;
+  margin: clamp(80px, 12vw, 170px) auto 0;
+}
+
+.news-detail header {
+  max-width: 900px;
+  margin: 0 auto clamp(50px, 8vw, 100px);
+  text-align: center;
+}
+
+.news-detail h1 {
+  margin: 20px 0;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(3rem, 9vw, 8rem);
+  font-weight: 400;
+  line-height: 0.9;
+}
+
+.news-detail header p {
+  color: var(--bone-dim);
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+}
+
+.news-detail__image {
+  position: relative;
+  min-height: 55vw;
+  max-height: 760px;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.news-detail__body,
+.legal-page {
+  max-width: 760px;
+  margin: clamp(50px, 8vw, 100px) auto 0;
+  color: var(--bone-dim);
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.75;
+}
+
+.legal-page h2 {
+  margin: 2.2em 0 0.6em;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 400;
+}
+
+@media (min-width: 900px) {
+  .news-card {
+    grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .works-card {
+    grid-template-columns: minmax(0, 1.2fr) minmax(360px, 0.8fr);
+  }
+}
+
+@media (max-width: 899px) {
+  .works-card__poster {
+    min-height: auto;
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@media (max-width: 640px) {
+  .works-page {
+    padding: 14px;
+  }
+
+  .works-card__poster {
+    border-radius: 32px;
+  }
+
+  .works-card__credits {
+    grid-template-columns: 1fr;
+  }
+
+  .works-card__gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-page__body {
+    padding: 34px 22px;
+    border-radius: 32px;
+  }
+
+  .contact-page__links {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-page__links a:nth-child(n) {
+    padding-inline: 4px;
+  }
+
+  .awards-page__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .news-card__image {
+    min-height: 300px;
+  }
+}
+
+/* ============================================================
+   Particles: a quiet field of dust behind every page (not the intro)
+   ============================================================ */
+
+.site-particles {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1.6s ease;
+}
+
+.site-particles.is-on {
+  opacity: 1;
+}
+
+.particles-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.particles-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* The two layers of the night sky lie on top of each other */
+.site-particles__layer {
+  position: absolute;
+  inset: 0;
+}
+
+/* ============================================================
+   Smooth cursor: a soft ribbon behind the mouse
+   ============================================================ */
+
+.smooth-cursor {
+  position: fixed;
+  z-index: 2147483000;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms ease;
+}
+
+.smooth-cursor.is-on {
+  opacity: 1;
+}
+
+.smooth-cursor__trail {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .smooth-cursor {
+    display: none;
+  }
+}
+
+/* ============================================================
+   About page: a personal portrait beneath the gold frame
+   ============================================================ */
+
+.about__profile {
+  gap: clamp(30px, 4vw, 48px);
+}
+
+.about__name {
+  margin-inline: auto;
+  font-size: clamp(2.2rem, 5vw, 4.6rem);
+}
+
+.about {
+  width: min(100%, 760px);
+  margin: clamp(80px, 11vw, 150px) auto 0;
+}
+
+.about__opening p {
+  margin: 0 0 1em;
+  color: var(--bone);
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.about__opening p:last-child {
+  margin-bottom: 0;
+}
+
+.about__opening--pending p,
+.about__chapter--pending .about__body p {
+  color: var(--bone-dim);
+}
+
+.about__quote {
+  margin: clamp(70px, 9vw, 120px) 0 0;
+  padding: 0;
+  border: 0;
+  text-align: center;
+}
+
+.about__quote p {
+  margin: 0;
+  color: var(--bone);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+
+.about__quote p::before {
+  content: '“';
+  display: block;
+  margin-bottom: 0.1em;
+  color: var(--oxblood-bright);
+  font-size: 2em;
+  line-height: 0.6;
+}
+
+.about__chapters {
+  display: grid;
+  gap: clamp(60px, 8vw, 110px);
+  margin: clamp(80px, 10vw, 140px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about__chapter {
+  display: grid;
+  grid-template-columns: clamp(52px, 8vw, 96px) minmax(0, 1fr);
+  column-gap: clamp(18px, 3vw, 40px);
+  padding-top: clamp(26px, 3vw, 38px);
+  border-top: 1px solid rgb(80 200 120 / 32%);
+}
+
+.about__chapter > :not(.about__numeral) {
+  grid-column: 2;
+}
+
+.about__numeral {
+  grid-row: 1 / span 3;
+  color: var(--oxblood-bright);
+  font-family: var(--name);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  line-height: 0.9;
+}
+
+.about__chapter h3 {
+  margin: 0 0 16px;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  text-transform: none;
+  text-wrap: balance;
+}
+
+.about__body p {
+  margin: 0 0 1em;
+  color: var(--bone);
+  font-size: clamp(1.05rem, 1.3vw, 1.2rem);
+  line-height: 1.75;
+  text-wrap: pretty;
+}
+
+.about__body p:last-child {
+  margin-bottom: 0;
+}
+
+.about__pending {
+  justify-self: start;
+  margin-top: 14px;
+  padding: 4px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--emerald-bright);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .about__chapter {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about__chapter > :not(.about__numeral) {
+    grid-column: 1;
+  }
+
+  .about__numeral {
+    grid-row: auto;
+    margin-bottom: 12px;
+  }
+}
+
+/* ============================================================
+   Responsive refinements for phones and tablets.
+   Desktop (1024px and wider, with a mouse) keeps its approved look;
+   these rules only add to it.
+   ============================================================ */
+
+/* Long film titles, festival names and email addresses wrap instead of
+   pushing the page sideways. The logo never wraps (it is set nowrap). */
+h1,
+h2,
+h3,
+h4,
+p,
+dd,
+li,
+blockquote {
+  overflow-wrap: break-word;
+}
+
+.contact-page a[href^='mailto:'],
+.contact-page a[href^='tel:'] {
+  overflow-wrap: anywhere;
+}
+
+/* Fixed controls and edges keep clear of notches, rounded corners and the
+   home indicator on phones that have them */
+.menu-button {
+  top: max(clamp(18px, 2.8vw, 42px), env(safe-area-inset-top, 0px));
+  right: max(clamp(18px, 2.8vw, 42px), env(safe-area-inset-right, 0px));
+}
+
+.works-page {
+  padding-top: max(clamp(18px, 2.8vw, 42px), env(safe-area-inset-top, 0px));
+  padding-right: max(clamp(18px, 2.8vw, 42px), env(safe-area-inset-right, 0px));
+  padding-left: max(clamp(18px, 2.8vw, 42px), env(safe-area-inset-left, 0px));
+}
+
+.legal-footer {
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+  padding-bottom: max(26px, env(safe-area-inset-bottom, 0px));
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+}
+
+/* The slide-out menu always fits the screen, scrolls if the screen is short,
+   and uses the visible height of mobile browsers (with a fallback) */
+.drawer {
+  max-width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-top: max(clamp(24px, 2.5vw, 36px), env(safe-area-inset-top, 0px));
+  padding-right: max(clamp(24px, 2.5vw, 36px), env(safe-area-inset-right, 0px));
+  padding-bottom: max(clamp(24px, 2.5vw, 36px), env(safe-area-inset-bottom, 0px));
+}
+
+/* Touch screens: every control is at least 44 by 44 px to tap, without
+   changing how it looks */
+@media (pointer: coarse) {
+  .works-page__menu,
+  .language-selector__button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .legal-footer__copy nav a,
+  .hero__nav a {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .legal-footer__copy nav {
+    gap: 0 22px;
+  }
+
+  .drawer__links a,
+  .drawer__socials a {
+    min-height: 44px;
+  }
+
+  /* The intro's Enter keeps its look but gets a comfortable area to tap */
+  .garden__enter {
+    min-width: 96px;
+    min-height: 44px;
+    justify-content: center;
+  }
+}
+
+/* Phones and tablets: small labels stay readable */
+@media (max-width: 1023px) {
+  .works-page__intro p,
+  .works-page__intro span {
+    font-size: 11px;
+  }
+
+  .works-card__credits dt,
+  .contact-form label {
+    font-size: 11px;
+  }
+
+  .hero__nav a {
+    font-size: 11px;
+  }
+
+  .hero__roles {
+    font-size: 10px;
+  }
+
+  .legal-footer {
+    font-size: 12px;
+  }
+}
+
+/* Trailers keep a cinema frame while they load, so the page does not jump */
+.works-card__video {
+  display: block;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+}
+
+/* Portrait tablets: the name is larger, so the hero does not feel empty */
+@media (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
+  .hero__name,
+  .garden__title,
+  .garden__emblem {
+    font-size: min(7vw, 5vh);
+  }
+
+  .hero__roles {
+    font-size: 11px;
+  }
+}
+
+/* Phones: the name leads the screen, as it does on desktop */
+@media (max-width: 640px) {
+  .hero__name,
+  .garden__title,
+  .garden__emblem {
+    font-size: min(10.5vw, 7vh);
+  }
+
+  .hero__roles {
+    width: max-content;
+    max-width: none;
+    font-size: clamp(5px, 1.5vw, 8px);
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  /* The showreel tag moves up beneath the header, clear of the About and
+     Films links at the bottom of the hero */
+  .hero__frame > .placeholder-tag {
+    top: 72px;
+    bottom: auto;
+    left: 50%;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .menu-button {
+    top: max(14px, env(safe-area-inset-top, 0px));
+    right: max(14px, env(safe-area-inset-right, 0px));
+  }
+
+  .works-page {
+    padding-top: max(14px, env(safe-area-inset-top, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
+    padding-left: max(14px, env(safe-area-inset-left, 0px));
+  }
+
+  /* The footer stacks: legal copy first, then the two-row social grid */
+  .legal-footer {
+    gap: 24px;
+  }
+}
+
+/* Phones: page and article titles stay large but not overwhelming, and a very
+   long single word breaks with a hyphen where the browser can */
+@media (max-width: 640px) {
+  .works-page__intro--detail h1,
+  .news-detail h1 {
+    font-size: clamp(2.2rem, 12vw, 3rem);
+    line-height: 0.95;
+  }
+}
+
+.works-page__intro h1,
+.news-detail h1,
+.works-card h2,
+.award-card h2,
+.news-card h2 {
+  hyphens: auto;
+  overflow-wrap: anywhere;
+}
+
+/* Landscape phones: the name fits the short screen */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero__name,
+  .garden__title,
+  .garden__emblem {
+    font-size: min(5vw, 11vh);
+  }
+
+  .hero__nav {
+    bottom: 12px;
+  }
+}
+
+/* Credits: three columns where there is room, two when the box is narrow, so
+   names and roles are never squeezed into slivers */
+.credits,
+.works-card__credits {
+  container-type: inline-size;
+}
+
+@media (max-width: 380px) {
+  .credits,
+  .works-card__credits {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Touch screens have no real hover: a tapped button or link does not stay
+   lifted or shifted after the tap */
+@media (hover: none) {
+  .btn--primary:hover,
+  .btn--ghost:hover,
+  .drawer__links a:hover,
+  .drawer__socials a:hover,
+  .garden__enter:hover::before,
+  .garden__enter:hover::after {
+    transform: none;
+  }
+}
+
+/* The name in the slide-out menu always fits beside the close button, so the
+   menu never scrolls sideways (the name is about 6.2em wide) */
+.drawer {
+  container-type: inline-size;
+  overflow-x: hidden;
+}
+
+.drawer__name {
+  font-size: min(clamp(2rem, 3.8vw, 3.5rem), calc((100cqi - 38px) / 6.4));
+}
+
+/* ---------- Festivals & Awards on the homepage ---------- */
+.awards--home {
+  margin-top: calc(-0.5in + 20px);
+  border-top: 1px solid var(--line);
+}
+
+.awards--home li {
+  padding: 22px 4px 22px 26px;
+}
+
+.awards--home li::before {
+  top: 31px;
+  left: 4px;
+}
+
+/* ---------- Reading text ----------
+   Body text, the footer and the green lettering use Cormorant Garamond, the
+   classic serif of the news dates. Morpheus stays for her name, headings,
+   titles and menu links. */
+:root {
+  --body:
+    'Cormorant Garamond', 'Noto Serif JP', 'Noto Serif KR', 'Noto Serif SC', Georgia,
+    'Times New Roman', serif;
+}
+
+:root:lang(ja) {
+  --body:
+    'Cormorant Garamond', 'Noto Serif JP', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif;
+}
+
+:root:lang(ko) {
+  --body: 'Cormorant Garamond', 'Noto Serif KR', 'AppleMyungjo', 'Batang', Georgia, serif;
+}
+
+:root:lang(zh-CN) {
+  --body: 'Cormorant Garamond', 'Noto Serif SC', 'Songti SC', 'SimSun', Georgia, serif;
+}
+
+/* Body text */
+p,
+li,
+dd,
+blockquote,
+figcaption,
+label,
+input,
+textarea,
+select,
+.lede,
+.news__item p,
+.contact-page__lede,
+.preview__text p,
+.works-page__empty p,
+.works-page__empty span,
+.works-card__empty,
+.works-card__gallery figcaption,
+.about__opening p,
+.about__body p,
+.about__quote p,
+.legal-page p,
+.legal-page li {
+  font-family: var(--body);
+}
+
+/* Footer */
+.legal-footer,
+.legal-footer a,
+.legal-footer p,
+.footer {
+  font-family: var(--body);
+}
+
+/* Green lettering (the news dates stay exactly as they are: they are Morpheus's
+   own numerals, which this serif was matched to) */
+.profile__roles,
+.section-title__kicker,
+.work__eyebrow,
+.credits dt,
+.works-card__credits dt,
+.works-card__meta,
+.works-page__intro p,
+.works-page__intro span,
+.contact__grid span,
+.contact-page__methods span,
+.contact-form label,
+.news-card time,
+.news-detail time,
+.award-card > p,
+.contact-page__preview-note,
+.preview-banner,
+.menu__links small,
+.menu__foot,
+.preview__text small,
+.about__pending,
+.language-selector__code {
+  font-family: var(--body);
+}
+
+/* Her role line under the name keeps Morpheus, like the name itself */
+.hero__roles {
+  font-family: var(--name);
+}
+
+/* ============================================================
+   Cinema slides (ScrollZoom.tsx), on every page but the rose intro.
+   Each section is revealed through a window that opens as it scrolls into
+   place: a narrow opening in the middle with a band across the top, widening
+   to the full section. --zoom runs from 0 to 1. The window is cut with
+   clip-path, so the particles show all around it. Without JavaScript, or
+   with reduced motion, none of this applies.
+   ============================================================ */
+.has-zoom [data-zoom] {
+  --zoom-open: clamp(0, var(--zoom, 1), 1);
+  --ap-reach: 1; /* how wide the masking starts: 1 on large screens */
+  /* sides close in 30%, ease to 10% by 80% of the way, then open fully;
+     the top band holds at 15% until 80%, then lifts away */
+  --ap-side: calc(
+    max(0, min(30 - 25 * var(--zoom-open), 50 - 50 * var(--zoom-open))) * var(--ap-reach) * 1%
+  );
+  --ap-top: calc(max(0, min(15, 75 - 75 * var(--zoom-open))) * var(--ap-reach) * 1%);
+  --ap-round: calc(36px * (1 - var(--zoom-open)));
+  position: relative;
+  clip-path: inset(
+    calc(var(--frame-top, 0px) + var(--ap-top)) var(--ap-side) 0 var(--ap-side) round
+      var(--ap-round)
+  );
+}
+
+/* A hairline of gold traces the opening while it is narrow */
+.has-zoom [data-zoom]::before {
+  position: absolute;
+  z-index: 0;
+  top: calc(var(--frame-top, 0px) + var(--ap-top));
+  right: var(--ap-side);
+  bottom: 0;
+  left: var(--ap-side);
+  border: 1px solid rgb(201 162 74 / 60%);
+  border-bottom: 0;
+  border-radius: var(--ap-round) var(--ap-round) 0 0;
+  background: radial-gradient(ellipse at 50% 0%, rgb(201 162 74 / 8%), transparent 65%);
+  content: '';
+  opacity: calc(1 - var(--zoom-open));
+  pointer-events: none;
+}
+
+/* Fully open: no window at all, so nothing is ever cut off */
+.has-zoom [data-zoom].is-full {
+  clip-path: none;
+}
+
+.has-zoom [data-zoom].is-full::before {
+  display: none;
+}
+
+/* Homepage slides on wide screens: each section fills the screen, holds in
+   place while the next rises over it, and sinks back into the dark as it is
+   covered */
+.has-zoom main > .is-slide {
+  display: flex;
+  box-sizing: border-box;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: min(96px, clamp(130px, 14vw, 220px));
+  padding-bottom: 48px;
+}
+
+.has-zoom .is-slide {
+  position: sticky;
+  top: 0;
+  opacity: calc(1 - min(1, var(--cover, 0) * 1.15));
+  transform: scale(calc(1 - 0.06 * var(--cover, 0)));
+  transform-origin: 50% 35%;
+}
+
+.has-zoom .is-slide.is-covered {
+  visibility: hidden;
+}
+
+/* ---------- Films: a projector's beam across the poster, which leans
+   gently towards the mouse; the credits come up one after another ---------- */
+.has-zoom #works .work__poster {
+  transform: perspective(1400px) rotateX(var(--tilt-y, 0deg)) rotateY(var(--tilt-x, 0deg));
+  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.has-zoom #works .work__poster::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 70% 90% at calc(10% + 30% * var(--zoom-open)) 0%,
+    rgb(255 236 205 / 26%),
+    rgb(255 236 205 / 6%) 45%,
+    transparent 70%
+  );
+  content: '';
+  mix-blend-mode: screen;
+  opacity: calc(0.25 + 0.75 * var(--zoom-open));
+  pointer-events: none;
+}
+
+.has-zoom #works .credits > div {
+  --step: clamp(0, (var(--zoom-open) - 0.55 - var(--delay, 0)) * 6, 1);
+  opacity: var(--step);
+  transform: translateY(calc((1 - var(--step)) * 12px));
+}
+
+.has-zoom #works .credits > div:nth-child(2) {
+  --delay: 0.06;
+}
+
+.has-zoom #works .credits > div:nth-child(3) {
+  --delay: 0.12;
+}
+
+.has-zoom #works .credits > div:nth-child(n + 4) {
+  --delay: 0.18;
+}
+
+/* ---------- Profile: the portrait comes into focus and a gallery light
+   sweeps across the gold frame ---------- */
+.has-zoom #profile .profile__photo-window img {
+  filter: blur(calc((1 - var(--zoom-open)) * 8px));
+}
+
+.has-zoom #profile .profile__photo::after {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 38%, rgb(255 233 180 / 55%) 50%, transparent 62%);
+  background-position: calc(110% - 120% * var(--zoom-open)) 0;
+  background-size: 300% 100%;
+  content: '';
+  mask: url('/images/ornate-gold-baroque-frame.webp') center / contain no-repeat;
+  -webkit-mask: url('/images/ornate-gold-baroque-frame.webp') center / contain no-repeat;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* ---------- Festivals & Awards: a gold line writes itself under each entry;
+   while the list is waiting, it flickers like a marquee before it lights ---------- */
+.has-zoom #festivals .awards--home li::after {
+  --step: clamp(0, (var(--zoom-open) - 0.45 - var(--delay, 0)) * 3, 1);
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #c9a24a, rgb(201 162 74 / 35%) 70%, transparent);
+  content: '';
+  transform: scaleX(var(--step));
+  transform-origin: left center;
+}
+
+.has-zoom #festivals .awards--home li:nth-child(2)::after {
+  --delay: 0.08;
+}
+
+.has-zoom #festivals .awards--home li:nth-child(n + 3)::after {
+  --delay: 0.16;
+}
+
+.has-zoom #festivals:not(.is-open) .awards__pending {
+  opacity: 0.25;
+}
+
+.has-zoom #festivals.is-open .awards__pending {
+  animation: marquee-light 1.8s ease-out both;
+}
+
+@keyframes marquee-light {
+  0% {
+    opacity: 0.25;
+  }
+  12% {
+    opacity: 1;
+  }
+  20% {
+    opacity: 0.35;
+  }
+  32% {
+    opacity: 0.95;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  60%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 18px rgb(201 162 74 / 45%);
+  }
+}
+
+/* ---------- News: the years roll in like an old departure board, then the
+   headlines appear beneath them ---------- */
+.has-zoom #news:not(.is-open) .news__date,
+.has-zoom #news:not(.is-open) .news__title {
+  opacity: 0;
+}
+
+.has-zoom #news.is-open .news__date {
+  display: inline-block;
+  animation: board-roll 900ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--row, 0) * 140ms);
+}
+
+.has-zoom #news.is-open .news__title {
+  animation: headline-in 700ms ease-out both;
+  animation-delay: calc(var(--row, 0) * 140ms + 420ms);
+}
+
+.has-zoom #news .news__item:nth-child(2) {
+  --row: 1;
+}
+
+.has-zoom #news .news__item:nth-child(3) {
+  --row: 2;
+}
+
+.has-zoom #news .news__item:nth-child(n + 4) {
+  --row: 3;
+}
+
+@keyframes board-roll {
+  0% {
+    opacity: 0;
+    transform: perspective(400px) rotateX(-90deg);
+  }
+  45% {
+    opacity: 1;
+    transform: perspective(400px) rotateX(20deg);
+  }
+  70% {
+    transform: perspective(400px) rotateX(-8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes headline-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Phones: a gentler opening, a softer focus pull */
+@media (max-width: 700px) {
+  .has-zoom [data-zoom] {
+    --ap-reach: 0.5;
+  }
+
+  .has-zoom #profile .profile__photo-window img {
+    filter: blur(calc((1 - var(--zoom-open)) * 4px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-zoom [data-zoom],
+  .has-zoom .is-slide,
+  .has-zoom #works .work__poster {
+    position: relative;
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ============================================================
+   The serpent on the pole, sized and placed for each spot.
+   The intro and the showreel hero carry a still crest, larger and
+   centred under the name; everywhere else the serpent slithers up and
+   down its pole, beside the name or above or below it, in proportion
+   with the lettering around it.
+   ============================================================ */
+
+/* The serpent takes the bone colour of the lettering, so it reads as part
+   of the name rather than a sticker beside it */
+.serpent-emblem img,
+.serpent-emblem__animated-art {
+  filter: sepia(0.2) saturate(0.9) brightness(0.94);
+}
+
+/* The climb: the serpent is hidden until the emblem comes on screen, then
+   it slides up out of the dark from the foot of the pole (a soft-edged mask
+   in SerpentPoleEmblem.tsx), tail first and head last, rising as it goes,
+   with a ripple running up its body. Once at the top it keeps slithering gently up
+   and down the pole. */
+.serpent-emblem--animated .serpent-emblem__serpent {
+  animation: none;
+}
+
+.serpent-emblem--climbing .serpent-emblem__serpent {
+  animation:
+    serpent-climb-on 3.2s cubic-bezier(0.3, 0.55, 0.25, 1) both,
+    serpent-slither 5s ease-in-out 3.2s infinite;
+}
+
+@keyframes serpent-climb-on {
+  0% {
+    transform: translate3d(0, 9%, 0);
+  }
+
+  100% {
+    transform: none;
+  }
+}
+
+/* Once at the top, the body keeps rippling (the wave in the drawing) and
+   the whole serpent drifts a little up and down the pole, as if breathing */
+@keyframes serpent-slither {
+  0%,
+  100% {
+    transform: none;
+  }
+
+  50% {
+    transform: translate3d(0, -2.5%, 0);
+  }
+}
+
+/* Intro and showreel: a larger still crest centred under the name. Both
+   use the same size so the name glides from one onto the other exactly. */
+.hero__name .serpent-emblem,
+.garden__emblem {
+  width: 1.12em;
+}
+
+.hero__name .serpent-emblem {
+  margin-top: 0.42em;
+}
+
+.garden__emblem {
+  margin-top: calc(0.42em + 0.08em);
+}
+
+/* Header, slide-out menu and Profile: the serpent stands beside the name,
+   exactly as tall as both lines of it */
+.works-page__name.kass-logo,
+.drawer__name.kass-logo,
+.profile__name--logo.kass-logo {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  justify-items: center;
+  column-gap: 0.34em;
+}
+
+.works-page__name .kass-logo__first,
+.drawer__name .kass-logo__first,
+.profile__name--logo .kass-logo__first {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.works-page__name .kass-logo__last,
+.drawer__name .kass-logo__last,
+.profile__name--logo .kass-logo__last {
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.works-page__name .serpent-emblem,
+.drawer__name .serpent-emblem,
+.profile__name--logo .serpent-emblem {
+  grid-row: 1 / span 2;
+  grid-column: 1;
+  width: auto;
+  height: 2.15em;
+  margin: 0;
+}
+
+/* Profile: a touch taller than the name, as a portrait mark */
+.profile__name--logo .serpent-emblem {
+  height: 2.5em;
+}
+
+/* About: a medium serpent centred beneath the name */
+.about__name .serpent-emblem {
+  width: 0.9em;
+  margin-top: 0.5em;
+}
+
+/* Closing name: the name first, with the serpent centred beneath the
+   surname */
+.cinematic-footer__logo .serpent-emblem {
+  width: 0.875em;
+  margin: 0.42em auto 0;
+}
+
+/* The slide-out menu name keeps clear of the close button with the serpent
+   beside it (the name and serpent together are about 7.3em wide) */
+.drawer__name {
+  font-size: min(clamp(2rem, 3.8vw, 3.5rem), calc((100cqi - 38px) / 7.6));
+}
+
+/* ============================================================
+   Footer (LegalFooter.tsx). Contact sits level with the first row of
+   icons and the legal links with the second, the two centred on each
+   other; the copyright line runs centred across the very bottom.
+   ============================================================ */
+.legal-footer {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    'copy . socials'
+    'rights rights rights';
+  align-items: center;
+  gap: clamp(26px, 3vw, 40px) clamp(28px, 5vw, 72px);
+}
+
+.legal-footer__copy {
+  display: grid;
+  grid-area: copy;
+  grid-template-rows: 52px 52px;
+  align-items: center;
+  justify-items: center;
+  gap: 8px;
+  text-align: center;
+}
+
+.legal-footer__contact {
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+}
+
+.legal-footer__copy nav {
+  justify-content: center;
+  gap: 10px 26px;
+}
+
+.legal-footer__copy nav a {
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  opacity: 0.72;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.legal-footer__copy nav a:hover,
+.legal-footer__copy nav a:focus-visible {
+  opacity: 1;
+}
+
+.legal-footer__socials {
+  grid-area: socials;
+  justify-content: end;
+}
+
+.legal-footer__rights {
+  grid-area: rights;
+  padding-top: clamp(18px, 2.4vw, 26px);
+  border-top: 1px solid rgb(80 200 120 / 18%);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  opacity: 0.72;
+  text-align: center;
+}
+
+/* Phones and narrow windows: everything centred in one column */
+@media (max-width: 700px) {
+  .legal-footer {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'copy'
+      'socials'
+      'rights';
+    justify-items: center;
+  }
+
+  .legal-footer__copy {
+    grid-template-rows: auto auto;
+    gap: 22px;
+  }
+
+  .legal-footer__copy nav {
+    gap: 10px 20px;
+  }
+
+  .legal-footer__socials {
+    justify-self: center;
+  }
+
+  .legal-footer__rights {
+    justify-self: stretch;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+  }
+}
+
+/* Contact reads on one line, the green label level with the top row of
+   icons; the five legal links always stay on one line, getting smaller on
+   narrow screens rather than wrapping */
+.legal-footer__contact {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 6px 16px;
+}
+
+.legal-footer__contact span {
+  line-height: 1;
+}
+
+.legal-footer__contact a {
+  line-height: 1;
+}
+
+.legal-footer__copy nav {
+  flex-wrap: nowrap;
+  gap: 0 clamp(10px, 2.2vw, 26px);
+  white-space: nowrap;
+}
+
+.legal-footer__copy nav a {
+  font-size: clamp(7.5px, 2.15vw, 10.5px);
+  letter-spacing: clamp(0.08em, 0.6vw, 0.18em);
+}
+
+@media (pointer: coarse) {
+  .legal-footer__copy nav {
+    gap: 0 clamp(8px, 2vw, 22px);
+  }
+
+  .legal-footer__copy nav a {
+    min-width: 0;
+  }
+}
+
+/* ============================================================
+   Profile on the homepage. On phones, one centred column: her name, then
+   her portrait in the gold frame, then the roles and her words. On larger
+   screens her name and words sit on the left and the framed portrait on
+   the right.
+   ============================================================ */
+.profile--home,
+.profile--home .profile__text,
+.profile--home .profile__photo {
+  grid-column: auto;
+}
+
+.profile--home {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(18px, 2.6vw, 34px);
+  justify-items: center;
+}
+
+.profile--home .profile__name--logo {
+  margin-inline: auto;
+}
+
+.profile--home .profile__photo {
+  width: min(100%, 520px);
+  justify-self: center;
+}
+
+.profile--home .profile__text {
+  width: min(100%, 760px);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.profile--home .profile__roles {
+  margin-top: 0;
+}
+
+@media (min-width: 900px) {
+  .profile--home {
+    grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
+    grid-template-rows: 1fr auto auto 1fr;
+    grid-template-areas:
+      '. photo'
+      'name photo'
+      'text photo'
+      '. photo';
+    gap: 0 clamp(42px, 7vw, 92px);
+    align-items: start;
+    justify-items: stretch;
+  }
+
+  .profile--home .profile__name--logo {
+    grid-area: name;
+    justify-self: start;
+    margin: 0;
+  }
+
+  .profile--home .profile__text {
+    grid-area: text;
+    width: 100%;
+    margin: 0;
+    padding-top: 14px;
+    text-align: left;
+  }
+
+  .profile--home .profile__photo {
+    grid-area: photo;
+    align-self: center;
+    justify-self: end;
+  }
+}
+
+/* ============================================================
+   Films on the homepage
+   ============================================================ */
+
+/* The two buttons are made like the language button and the menu button:
+   frosted glass with soft corners, a soft shadow and emerald lettering */
+#works .button-row .btn {
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 25%);
+  color: var(--emerald-bright);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  transition: background-color 250ms ease;
+}
+
+#works .button-row .btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+#works .button-row .btn:hover,
+#works .button-row .btn:focus-visible {
+  background: rgb(239 232 221 / 8%);
+  color: var(--emerald-bright);
+  transform: none;
+}
+
+/* Phones and tablets: a clear gap between the Films title and the poster */
+@media (max-width: 899px) {
+  #works .work__poster {
+    top: 0;
+  }
+
+  #works .section-title {
+    margin-bottom: clamp(30px, 8vw, 44px);
+  }
+}
+
+/* Laptops: the green line above the title starts level with the top of
+   the poster, and the buttons are smaller */
+@media (min-width: 900px) {
+  #works .work {
+    align-items: start;
+  }
+
+  #works .work__poster {
+    top: 0;
+  }
+
+  #works .work__eyebrow {
+    margin-top: 0;
+    line-height: 1;
+  }
+
+  #works .button-row .btn {
+    min-height: 38px;
+    padding: 0 15px;
+    font-size: 11px;
+  }
+
+  #works .button-row .btn svg {
+    width: 13px;
+    height: 13px;
+  }
+}
+
+/* The trailer and details buttons: after the film's details on phones,
+   centred under the poster on larger screens */
+#works .work__actions {
+  margin-top: calc(30px - clamp(42px, 7vw, 92px));
+}
+
+@media (min-width: 900px) {
+  #works .work {
+    grid-template-rows: auto 1fr;
+    row-gap: 28px;
+  }
+
+  #works .work__poster {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #works .work__info {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  #works .work__actions {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: start;
+    justify-content: center;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 899px) {
+  #works .work__actions {
+    gap: 10px;
+  }
+
+  #works .button-row .btn {
+    padding: 0 14px;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+  }
+}
+
+/* ============================================================
+   Room for the language button and the menu button.
+   They float at the top corners as you scroll, so on tablets and laptops
+   the homepage keeps a clear margin either side of them: the showreel
+   frame and every section sit inside it. On phones the frame starts
+   below the two buttons.
+   ============================================================ */
+:root {
+  /* the buttons' own inset and width, plus a breathing space */
+  --control-room: calc(clamp(18px, 2.8vw, 42px) + 46px + clamp(22px, 3vw, 48px));
+}
+
+@media (min-width: 641px) {
+  .hero {
+    padding-right: max(var(--control-room), env(safe-area-inset-right, 0px));
+    padding-left: max(var(--control-room), env(safe-area-inset-left, 0px));
+  }
+
+  main {
+    padding-inline: var(--control-room);
+  }
+
+  #works {
+    margin-inline: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding-top: max(calc(14px + 46px + 12px), calc(env(safe-area-inset-top, 0px) + 58px));
+  }
+}
+
+/* ============================================================
+   Small lettering in a plain, highly readable web font (Inter).
+   Morpheus stays for her name, the large titles and the news years.
+   ============================================================ */
+:root {
+  --ui:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+}
+
+.hero__roles,
+.hero__nav a,
+.placeholder-tag,
+.label-heading,
+.btn {
+  font-family: var(--ui);
+}
+
+.hero__roles {
+  font-size: clamp(9px, 0.78vw, 12px);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+}
+
+.hero__nav a {
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+
+.placeholder-tag {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+}
+
+.label-heading {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+}
+
+.btn {
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .hero__roles {
+    font-size: clamp(7.5px, 2.3vw, 9px);
+    letter-spacing: 0.08em;
+  }
+}
+
+/* ============================================================
+   The showreel box takes the shape of a film frame (16:9) rather than
+   filling the whole screen, so an uploaded video fits it without heavy
+   cropping. On phones it is a shorter upright frame (4:5).
+   ============================================================ */
+.hero {
+  height: auto;
+  min-height: 0;
+}
+
+.hero__frame {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  max-height: calc(100svh - 2 * clamp(18px, 2.8vw, 42px));
+}
+
+@media (max-width: 640px) {
+  .hero__frame {
+    aspect-ratio: 4 / 5;
+    max-height: calc(100svh - 90px);
+  }
+}
+
+/* The roles line sits a little higher off the bottom edge of the frame */
+.hero__roles {
+  bottom: calc(max(8px, env(safe-area-inset-bottom, 0px)) + 12px);
+}
+
+/* Phones: Profile follows the films without a large empty gap */
+@media (max-width: 640px) {
+  #profile {
+    padding-top: 44px;
+  }
+
+  #profile .section-title {
+    margin-bottom: 26px;
+  }
+}
+
+/* Phones and tablets: the film title on one line, the two buttons centred,
+   and Profile coming straight after them */
+@media (max-width: 899px) {
+  #works .work__title {
+    max-width: none;
+    font-size: min(2.6rem, 7.6vw);
+    white-space: nowrap;
+  }
+
+  #works .work__actions {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #profile {
+    padding-top: 12px;
+  }
+}
+
+/* Small phones: the two buttons still fit side by side */
+@media (max-width: 380px) {
+  #works .work__actions {
+    gap: 8px;
+  }
+
+  #works .button-row .btn {
+    padding: 0 11px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}
+
+/* ============================================================
+   Footer, final layout. Contact on the left, centred between the two
+   rows of icons on the right; beneath, one line with the copyright and
+   then the smaller legal links, starting at the left. Every word in the
+   footer is set in Inter, like the lettering in the showreel frame.
+   ============================================================ */
+.legal-footer,
+.legal-footer *,
+.legal-footer a,
+.legal-footer p,
+.legal-footer span {
+  font-family: var(--ui);
+}
+
+.legal-footer {
+  grid-template-areas:
+    'copy . socials'
+    'bar bar bar';
+}
+
+.legal-footer__copy {
+  grid-template-rows: auto;
+  align-self: center;
+}
+
+.legal-footer__contact span {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+}
+
+.legal-footer__contact a {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+
+.legal-footer__bar {
+  display: flex;
+  grid-area: bar;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px clamp(18px, 3vw, 40px);
+  padding-top: clamp(16px, 2vw, 22px);
+  border-top: 1px solid rgb(80 200 120 / 18%);
+}
+
+.legal-footer__rights {
+  grid-area: auto;
+  padding: 0;
+  border: 0;
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-align: left;
+}
+
+.legal-footer__bar nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px clamp(12px, 1.6vw, 20px);
+}
+
+.legal-footer__bar nav a {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  opacity: 0.6;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.legal-footer__bar nav a:hover,
+.legal-footer__bar nav a:focus-visible {
+  opacity: 1;
+}
+
+@media (pointer: coarse) {
+  .legal-footer__bar nav a {
+    display: inline-flex;
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .legal-footer__bar {
+    row-gap: 0;
+  }
+}
+
+/* Phones: everything centred, the legal links on the line below the
+   copyright */
+@media (max-width: 700px) {
+  .legal-footer {
+    grid-template-areas:
+      'copy'
+      'socials'
+      'bar';
+  }
+
+  .legal-footer__bar {
+    justify-content: center;
+    justify-self: stretch;
+    text-align: center;
+  }
+
+  .legal-footer__rights {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .legal-footer__bar nav {
+    justify-content: center;
+    gap: 4px 14px;
+  }
+}
+
+/* ============================================================
+   Homepage closing name: 20px smaller (the serpent scales with it), and
+   the green line above it 20px lower, still well clear of the name
+   ============================================================ */
+.cinematic-footer {
+  margin-top: calc(clamp(120px, 18vw, 280px) + 20px);
+  padding-top: calc(clamp(56px, 7vw, 104px) - 20px);
+}
+
+.cinematic-footer__logo {
+  font-size: calc(clamp(1.175rem, 6.5vw, 7.5rem) * 0.8);
+}
+
+@media (min-width: 900px) {
+  .cinematic-footer__logo {
+    font-size: calc(clamp(1.175rem, 6.5vw, 7.5rem) - 20px);
+  }
+}
+
+@media (max-width: 700px) {
+  .cinematic-footer {
+    margin-top: calc(clamp(90px, 24vw, 130px) + 20px);
+    padding-top: calc(clamp(56px, 7vw, 104px) - 14px);
+  }
+}
+
+/* The intro serpent sits exactly where the showreel serpent does under the
+   name, so the hand-over from the intro is seamless */
+.garden__emblem {
+  margin-top: 0.42em;
+}
+
+/* Homepage closing name: the serpent 20px taller */
+.cinematic-footer__logo .serpent-emblem {
+  width: calc(0.875em + 20px * 468 / 1160);
+}
+
+/* Footer on larger screens: contact and the icons each sit an inch (96px)
+   in towards the middle, and the legal links 10px further right */
+@media (min-width: 701px) {
+  .legal-footer__copy {
+    margin-left: 96px;
+  }
+
+  .legal-footer__socials {
+    margin-right: 96px;
+  }
+}
+
+.legal-footer__bar nav {
+  margin-left: 10px;
+}
+
+@media (max-width: 700px) {
+  .legal-footer__bar nav {
+    margin-left: 0;
+  }
+}
+
+/* Homepage sections after Films: an even, modest space above each one */
+@media (min-width: 641px) {
+  #profile,
+  #festivals,
+  #news {
+    padding-top: clamp(64px, 7vw, 110px);
+  }
+}
+
+@media (max-width: 640px) {
+  #festivals,
+  #news {
+    padding-top: 56px;
+  }
+}
+
+/* The showreel frame starts below the language and menu buttons on every
+   screen; everything after it moves down with it */
+@media (min-width: 641px) {
+  .hero {
+    padding-top: calc(clamp(18px, 2.8vw, 42px) + 46px + 16px);
+  }
+
+  .hero__frame {
+    max-height: calc(100svh - clamp(18px, 2.8vw, 42px) * 2 - 62px);
+  }
+}
+
+/* Her roles line reads the same everywhere: the full line, in Inter */
+.profile__roles,
+.works-page__intro span {
+  font-family: var(--ui);
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   About: her page. The title, her portrait and her words sit close
+   together, without the green label or a second large name.
+   ============================================================ */
+.about__intro {
+  padding: clamp(40px, 6vw, 90px) 0 clamp(26px, 3.5vw, 44px);
+}
+
+.about__intro h1 {
+  margin-top: 0;
+}
+
+.about {
+  margin-top: clamp(36px, 5vw, 64px);
+}
+
+/* About: her words and the notes beneath each question in Inter, like the
+   rest of the small lettering; the titles keep Morpheus */
+.about__opening p,
+.about__quote p,
+.about__body p,
+.about__pending {
+  font-family: var(--ui);
+}
+
+.about__opening p {
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.about__body p {
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+/* ============================================================
+   Slide-out menu: her name centred, with her roles in green beneath it,
+   set to the same width as the name
+   ============================================================ */
+.drawer__top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-inline: 38px;
+  font-size: min(clamp(2rem, 3.8vw, 3.5rem), calc((100cqi - 76px) / 7.6));
+}
+
+.drawer__top .drawer__name {
+  max-width: none;
+  margin-inline: auto;
+  font-size: 1em;
+}
+
+.drawer__roles {
+  margin: 0.32em 0 0;
+  color: var(--emerald-bright);
+  font-family: var(--ui);
+  font-size: 0.204em;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* The roles line sits 5px lower and is centred under her name's lettering
+   (not under the serpent), matching the width of "Kassandra" */
+.drawer__roles {
+  margin-top: calc(0.32em + 5px);
+  font-size: 0.1717em;
+  translate: 3.49em 0;
+}
+
+/* ============================================================
+   Contact page: tighter and lighter. A shorter heading, a slimmer
+   panel, plainer type and a small frosted Send button.
+   ============================================================ */
+main:has(.contact-page__body) .works-page__intro {
+  padding: clamp(40px, 6vw, 90px) 0 clamp(26px, 3.5vw, 44px);
+}
+
+.contact-page__body {
+  max-width: 760px;
+  padding: clamp(26px, 4vw, 52px);
+  border-radius: 32px;
+}
+
+.contact-page__lede {
+  max-width: 560px;
+  margin-bottom: clamp(24px, 3vw, 36px);
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.4;
+}
+
+.contact-page__methods {
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.contact-page__methods a {
+  gap: 6px;
+  padding: 16px 20px;
+}
+
+.contact-page__methods strong {
+  font-family: var(--ui);
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.contact-page__methods span,
+.contact-form label {
+  font-family: var(--ui);
+  font-weight: 600;
+}
+
+.contact-page__form h2 {
+  margin-bottom: 4px;
+  font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+}
+
+.contact-page__form > p {
+  margin: 0;
+  font-family: var(--ui);
+  font-size: 0.85rem;
+}
+
+.contact-form {
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.contact-form__field {
+  gap: 6px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 11px 14px;
+  font-family: var(--ui);
+  font-size: 0.95rem;
+}
+
+.contact-form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+.contact-form .btn {
+  justify-self: start;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid rgb(80 200 120 / 45%);
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 25%);
+  color: var(--emerald-bright);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.contact-form .btn:hover,
+.contact-form .btn:focus-visible {
+  background: rgb(239 232 221 / 8%);
+  color: var(--emerald-bright);
+  transform: none;
+}
+
+.contact-page__privacy {
+  margin-top: 28px;
+  font-family: var(--ui);
+  font-size: 0.75rem;
+}
+
+/* Footer bottom line on larger screens: the copyright at the left end and
+   the legal links at the right end, lined up with Contact above on the
+   left and the icons above on the right */
+@media (min-width: 701px) {
+  .legal-footer__bar {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    padding-inline: 96px;
+  }
+
+  .legal-footer__bar nav {
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    margin-left: 0;
+    white-space: nowrap;
+  }
+
+  .legal-footer__rights {
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1000px) {
+  .legal-footer__bar {
+    padding-inline: 0;
+  }
+
+  .legal-footer__copy {
+    margin-left: 0;
+  }
+
+  .legal-footer__socials {
+    margin-right: 0;
+  }
+}
+
+/* Contact page footer: no second email (it is already on the page), all
+   the icons on one centred line, and a tighter footer */
+body:has(.contact-page__body) .legal-footer__copy {
+  display: none;
+}
+
+body:has(.contact-page__body) .legal-footer {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'socials'
+    'bar';
+  row-gap: clamp(16px, 2vw, 24px);
+  padding-top: clamp(14px, 2vw, 24px);
+}
+
+body:has(.contact-page__body) .legal-footer__socials {
+  grid-template-columns: repeat(8, 44px);
+  justify-content: center;
+  justify-self: center;
+  gap: 0 10px;
+  margin: 0;
+}
+
+body:has(.contact-page__body) .legal-footer__socials a {
+  width: 44px;
+  height: 44px;
+}
+
+body:has(.contact-page__body) .contact-page__body {
+  margin-bottom: clamp(36px, 5vw, 64px);
+}
+
+@media (max-width: 480px) {
+  body:has(.contact-page__body) .legal-footer__socials {
+    grid-template-columns: repeat(8, 36px);
+    gap: 0 4px;
+  }
+
+  body:has(.contact-page__body) .legal-footer__socials a {
+    width: 36px;
+    height: 36px;
+  }
+
+  body:has(.contact-page__body) .legal-footer__socials .drawer__social-logo {
+    width: 20px;
+  }
+}
+
+/* Contact page: the icons follow the form closely */
+main:has(.contact-page__body) {
+  padding-bottom: 0;
+}
+
+body:has(.contact-page__body) .contact-page__body {
+  margin-bottom: clamp(20px, 2.5vw, 36px);
+}
+
+/* Films pages: the year, type, status and length sit on one line under the
+   film's title */
+.works-card h2 {
+  margin-bottom: 14px;
+}
+
+.works-card .works-card__meta {
+  display: block;
+  margin: 0 0 26px;
+  color: var(--emerald-bright);
+  font-family: var(--ui);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+/* Films pages: the synopsis and description in Inter, at a normal weight */
+.works-card .works-card__body > p:not(.works-card__meta),
+.works-card .works-card__lede {
+  font-family: var(--ui);
+  font-weight: 400;
+}
+
+.works-card .works-card__lede {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+}
+
+.works-card .works-card__body > p:not(.works-card__meta, .works-card__lede) {
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+/* Credits (Director, Format, Status): the white answers in Inter */
+.works-card__credits dd,
+.credits dd {
+  font-family: var(--ui);
+  font-weight: 400;
+}
+
+/* Films pages: the synopsis line in Cormorant Garamond, like the green
+   credit labels, at a normal weight */
+.works-card .works-card__body > p.works-card__lede {
+  font-family: var(--body);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* Credits: the green labels larger, sitting just above their answers */
+.works-card__credits dt,
+.credits dt {
+  margin: 0 0 6px;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  line-height: 1.2;
+}
+
+.works-card__credits dd,
+.credits dd {
+  margin: 0;
+  line-height: 1.35;
+}
+
+/* Footer: the green "Contact" label in Cormorant Garamond, like the green
+   credit labels on the film pages */
+.legal-footer .legal-footer__contact span {
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+}
+
+/* Films pages: the longer description in green */
+.works-card .works-card__body > p:not(.works-card__meta, .works-card__lede) {
+  color: var(--emerald-bright);
+}
+
+/* Films pages: the poster is the same shape as on the homepage, a 4:3
+   frame (5:4 on phones) instead of stretching to the height of the text */
+.works-card__poster {
+  align-self: start;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 640px) {
+  .works-card__poster {
+    aspect-ratio: 5 / 4;
+    border-radius: 32px;
+  }
+}
+
+@media (min-width: 900px) {
+  .works-card {
+    grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+  }
+
+  .works-card__poster {
+    width: 100%;
+    max-width: 600px;
+    justify-self: center;
+  }
+}
+
+/* Homepage poster credit: every word in the same lettering as the green
+   "Short film" line above the title, kept white */
+.work__poster-credit,
+.work__poster-credit .name--kassandra {
+  font-family: var(--body);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   Poetry & Writing (poetry-writing/page.tsx and WritingArticle.tsx).
+   The collection lists each category that holds published work; each
+   piece opens on its own page laid out for reading. Poems keep every line
+   break, blank line and indent, and are never stretched across the screen.
+   ============================================================ */
+.writing-page .writing-page__intro {
+  padding: clamp(40px, 6vw, 90px) 0 clamp(30px, 4vw, 56px);
+}
+
+.writing-page .writing-page__intro h1 {
+  margin-top: 0;
+  font-size: clamp(2.6rem, 7.5vw, 6.5rem);
+  text-wrap: balance;
+}
+
+.writing-collection {
+  display: grid;
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: clamp(70px, 9vw, 130px);
+  gap: clamp(48px, 6vw, 80px);
+}
+
+.writing-collection__category {
+  margin: 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--emerald-bright);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.writing-collection__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.writing-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 6px 24px;
+  padding: 22px 4px;
+  border-bottom: 1px solid var(--line);
+  color: var(--bone);
+  text-decoration: none;
+  transition:
+    padding 300ms ease,
+    background-color 300ms ease;
+}
+
+.writing-entry__title {
+  grid-column: 1;
+  font-family: var(--name);
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+  transition: color 300ms ease;
+}
+
+.writing-entry__subtitle {
+  grid-column: 1;
+  color: var(--bone-dim);
+  font-family: var(--body);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.writing-entry__year {
+  grid-row: 1;
+  grid-column: 2;
+  color: var(--emerald-bright);
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.writing-entry:hover,
+.writing-entry:focus-visible {
+  padding-left: 14px;
+  background: rgb(239 232 221 / 3%);
+}
+
+.writing-entry:hover .writing-entry__title,
+.writing-entry:focus-visible .writing-entry__title {
+  color: var(--emerald-bright);
+}
+
+/* ---------- A single piece ---------- */
+.writing {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(24px, 4vw, 48px) 0 clamp(80px, 10vw, 140px);
+}
+
+.writing__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: clamp(28px, 4vw, 48px);
+  color: var(--emerald-bright);
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  opacity: 0.82;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.writing__back:hover,
+.writing__back:focus-visible {
+  opacity: 1;
+}
+
+.writing__header {
+  margin-bottom: clamp(36px, 5vw, 60px);
+  text-align: center;
+}
+
+.writing__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 12px;
+  margin: 0;
+  color: var(--emerald-bright);
+  font-family: var(--body);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.writing__meta span + span::before {
+  margin-right: 12px;
+  content: '·';
+}
+
+.writing__header h1 {
+  margin: 16px 0 0;
+  color: var(--bone);
+  font-family: var(--name);
+  font-size: clamp(2.4rem, 6vw, 4.6rem);
+  font-weight: 400;
+  line-height: 1;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.writing__subtitle {
+  margin: 14px 0 0;
+  color: var(--bone-dim);
+  font-family: var(--body);
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  font-style: italic;
+}
+
+.writing__author {
+  margin: 18px 0 0;
+  color: var(--bone-dim);
+  font-family: var(--ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.writing__image {
+  margin: 0 auto clamp(36px, 5vw, 56px);
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.writing__image img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.writing__body {
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: clamp(1.15rem, 1.6vw, 1.32rem);
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.writing__body p {
+  margin: 0 0 1em;
+}
+
+.writing__body h2,
+.writing__body h3,
+.writing__body h4 {
+  margin: 1.6em 0 0.6em;
+  font-family: var(--name);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.writing__body blockquote {
+  margin: 1.2em 0;
+  border-left: 1px solid var(--emerald-bright);
+  font-style: italic;
+}
+
+.writing__body a {
+  color: var(--emerald-bright);
+}
+
+.writing__body hr {
+  width: 40%;
+  margin: 2em auto;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.writing__body--prose {
+  max-width: 66ch;
+  margin: 0 auto;
+}
+
+/* Poems: each line is its own line, a blank line is a stanza break, and a
+   line too long for a phone wraps with a hanging indent instead of running
+   off the side */
+.writing__body--verse {
+  width: fit-content;
+  max-width: min(100%, 36em);
+  margin: 0 auto;
+}
+
+.writing__body p,
+.writing__body li,
+.writing__body blockquote {
+  padding-inline-start: calc(var(--indent, 0) * 2em);
+}
+
+.writing__body--verse p {
+  margin: 0;
+}
+
+.writing__line {
+  display: block;
+  padding-inline-start: 1.5em;
+  text-indent: -1.5em;
+}
+
+.writing__body p.writing__blank {
+  margin: 0;
+}
+
+.writing__footer {
+  margin-top: clamp(44px, 6vw, 64px);
+  padding-top: 26px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.writing__credit {
+  margin: 0;
+  color: var(--bone-dim);
+  font-family: var(--body);
+  font-size: 1.05rem;
+  font-style: italic;
+}
+
+.writing__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.writing .writing__button {
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid rgb(80 200 120 / 45%);
+  border-radius: 12px;
+  background: transparent;
+  box-shadow: 0 8px 30px rgb(0 0 0 / 25%);
+  color: var(--emerald-bright);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.writing .writing__button:hover,
+.writing .writing__button:focus-visible {
+  background: rgb(239 232 221 / 8%);
+  transform: none;
+}
+
+@media (max-width: 640px) {
+  .writing-entry {
+    padding: 18px 2px;
+  }
+
+  .writing__body {
+    font-size: 1.1rem;
+  }
+
+  .writing__line {
+    padding-inline-start: 1.2em;
+    text-indent: -1.2em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .writing-entry,
+  .writing-entry__title {
+    transition: none;
+  }
+
+  .writing-entry:hover,
+  .writing-entry:focus-visible {
+    padding-left: 4px;
+  }
+}
+
+/* ============================================================
+   Homepage footer on laptops and larger: less empty space above the
+   green line, between the serpent and the contact row, and around the
+   legal line. The name, serpent and icons keep their size.
+   ============================================================ */
+@media (min-width: 701px) {
+  .cinematic-footer {
+    margin-top: clamp(80px, 9vw, 140px);
+    padding-bottom: 12px;
+  }
+
+  body:has(.cinematic-footer) .legal-footer {
+    padding-top: 20px;
+    padding-bottom: 18px;
+    row-gap: 18px;
+  }
+}
+
+/* ============================================================
+   Profile on the homepage. Laptops: the green roles line under her
+   name sits on one line. Phones: her picture comes first, then her
+   name, then the words.
+   ============================================================ */
+@media (min-width: 900px) {
+  .profile--home .profile__roles {
+    font-size: clamp(8px, 0.78vw, 11px);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 899px) {
+  .profile--home .profile__photo {
+    order: 1;
+  }
+
+  .profile--home .profile__name--logo {
+    order: 2;
+  }
+
+  .profile--home .profile__text {
+    order: 3;
+  }
+}
+
+/* News on the homepage: the headlines and their text are set in Inter */
+.news .news__title,
+.news .news__item p {
+  font-family: var(--ui);
+}
+
+.news .news__title {
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.news .news__item p {
+  font-size: 14px;
+}
+
+/* Phones: Privacy to Accessibility sit on one line */
+@media (max-width: 700px) {
+  .legal-footer__bar nav {
+    flex-wrap: nowrap;
+    gap: 0 clamp(8px, 3vw, 14px);
+  }
+
+  .legal-footer__bar nav a {
+    font-size: clamp(7.5px, 2.2vw, 8.5px);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+}
+
+/* Phones: the green roles line under her name sits on one line */
+@media (max-width: 899px) {
+  .profile--home .profile__roles {
+    font-size: clamp(7px, 2.25vw, 11px);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+}
+
+/* Phones: Director, Format and Status side by side on one row, smaller */
+@media (max-width: 700px) {
+  .works-card .works-card__credits {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    gap: 0 12px;
+    padding: 18px 0;
+  }
+
+  .works-card .works-card__credits dt {
+    margin-bottom: 4px;
+    font-size: clamp(9px, 2.8vw, 11px);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .works-card .works-card__credits dd {
+    font-size: clamp(11.5px, 3.6vw, 14px);
+    white-space: nowrap;
+  }
+}
+
+/* Phones: on the homepage film, the green line sits under the title */
+@media (max-width: 700px) {
+  .work .work__info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .work .work__info > * {
+    order: 2;
+  }
+
+  .work .work__info > .work__title {
+    order: 0;
+    margin-bottom: 0;
+  }
+
+  .work .work__info > .work__eyebrow {
+    order: 1;
+    margin: 10px 0 0;
+  }
+}
+
+/* Phones: on the homepage film, Director, Format and Status on one row */
+@media (max-width: 700px) {
+  .work .credits {
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    gap: 0 12px;
+  }
+
+  .work .credits dt {
+    margin-bottom: 4px;
+    font-size: clamp(9px, 2.8vw, 11px);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+
+  .work .credits dd {
+    font-size: clamp(11.5px, 3.6vw, 14px);
+    white-space: nowrap;
+  }
+}
+
+/* Films pages: the longer description matches the synopsis line above it,
+   in white Cormorant Garamond */
+.works-card .works-card__body > p:not(.works-card__meta, .works-card__lede) {
+  color: var(--bone);
+  font-family: var(--body);
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.45;
+}
+
+/* Phones: on the films pages, the year, type, status and length line
+   sits on one line */
+@media (max-width: 700px) {
+  .works-card .works-card__body > p.works-card__meta {
+    font-size: clamp(7.5px, 2.4vw, 10px);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+}
+
+/* Phones: her roles line under the Films page heading on one line */
+@media (max-width: 700px) {
+  .works-page:not(.writing-page) .works-page__intro span {
+    font-size: clamp(7px, 2.25vw, 11px);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+}
+
+/* Phones: on the inner pages the logo sits below the language and menu
+   buttons, centred */
+@media (max-width: 700px) {
+  .works-page__header {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .works-page__header .works-page__actions {
+    order: -1;
+    align-self: flex-end;
+  }
+
+  .works-page__header .works-page__name {
+    align-self: center;
+  }
+}
+
+/* Phones: no scroll bar down the right edge (the page still scrolls) */
+@media (max-width: 700px) {
+  html,
+  body {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Festivals & Awards: the page title on one line at every size */
+.awards-page .works-page__intro h1 {
+  font-size: min(clamp(3.5rem, 10vw, 9rem), 8.2vw);
+  white-space: nowrap;
+}
+
+/* Phones: Festivals & Awards, the box sits close under the title */
+@media (max-width: 700px) {
+  .awards-page .works-page__intro {
+    padding-bottom: 24px;
+  }
+
+  .awards-page .works-page__empty {
+    min-height: 0;
+    padding: 44px 0;
+  }
+}
+
+/* Phones: Poetry & Writing, the title and the line under it each on one
+   line */
+@media (max-width: 700px) {
+  .writing-page .writing-page__intro h1 {
+    font-size: min(2.6rem, 8.6vw);
+    white-space: nowrap;
+  }
+
+  .writing-page .writing-page__intro span {
+    font-size: clamp(7.5px, 2.5vw, 11px);
+    letter-spacing: 0.12em;
+    white-space: nowrap;
+  }
+}
+
+/* Phones: the privacy line under the contact form fits on two lines */
+@media (max-width: 700px) {
+  .contact-page__privacy {
+    font-size: clamp(10px, 2.9vw, 12px);
+    line-height: 1.5;
+    text-wrap: balance;
+  }
+}
+
+/* Phones: the line under the Contact title fits on two lines */
+@media (max-width: 700px) {
+  .contact-page__lede {
+    font-size: clamp(13.5px, 4.3vw, 17.6px);
+    text-wrap: balance;
+  }
+}
+
+/* Phones: the "Professional email" label on the contact page, larger and
+   in Morpheus */
+@media (max-width: 700px) {
+  .contact-page__methods a > span {
+    font-family: var(--name);
+    font-size: clamp(1.1rem, 5.2vw, 1.4rem);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+}
+
+/* Phones: in the slide-out menu, the logo larger and centred below the
+   close button, without the roles line */
+@media (max-width: 700px) {
+  .drawer .drawer__top {
+    flex-direction: column;
+    align-items: center;
+    padding-inline: 0;
+    padding-bottom: 0;
+    margin-bottom: 26px;
+  }
+
+  .drawer .drawer__top .drawer__name {
+    margin: 34px auto 0;
+    font-size: clamp(26px, 8.6vw, 38px);
+  }
+
+  .drawer .drawer__roles {
+    display: none;
+  }
+}
+
+/* ============================================================
+   Laptops: the inner pages (everything except the homepage) tightened.
+   A smaller name and serpent at the top, smaller page titles, less empty
+   space around them and between sections, and the footer icons on one
+   line at a smaller size.
+   ============================================================ */
+@media (min-width: 701px) {
+  .works-page__header .works-page__name {
+    font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  }
+
+  main.works-page .works-page__intro {
+    padding-top: clamp(36px, 4vw, 64px);
+    padding-bottom: clamp(30px, 3.2vw, 52px);
+  }
+
+  main.works-page .works-page__intro h1 {
+    margin: 10px 0 14px;
+    font-size: clamp(3rem, 5.4vw, 5rem);
+  }
+
+  main.works-page .works-grid {
+    gap: clamp(64px, 7vw, 100px);
+  }
+
+  main.works-page .legal-page {
+    margin-top: clamp(16px, 2vw, 32px);
+  }
+
+  main.works-page .legal-page h2 {
+    margin: 1.6em 0 0.5em;
+    font-size: clamp(1.5rem, 2.3vw, 2.2rem);
+  }
+
+  main.works-page .about {
+    margin-top: clamp(36px, 3.6vw, 52px);
+  }
+
+  main.works-page .writing-collection {
+    padding-bottom: clamp(48px, 5vw, 72px);
+    gap: clamp(36px, 4vw, 52px);
+  }
+
+  body:has(main.works-page) .legal-footer {
+    padding-top: 24px;
+    padding-bottom: 18px;
+    row-gap: 20px;
+  }
+
+  body:has(main.works-page) .legal-footer__socials {
+    grid-template-columns: repeat(8, 36px);
+    gap: 0 6px;
+  }
+
+  body:has(main.works-page) .legal-footer__socials a {
+    width: 36px;
+    height: 36px;
+  }
+
+  body:has(main.works-page) .legal-footer__socials .drawer__social-logo {
+    width: 18px;
+  }
+}
+
+/* Language button: a small drawn flag instead of letters, on every screen.
+   The list of languages is set in Inter. */
+.language-flag {
+  display: block;
+  flex: none;
+  overflow: hidden;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px rgb(239 232 221 / 22%);
+}
+
+.language-selector__flag {
+  width: 22px;
+  height: 15px;
+}
+
+.language-selector__item-flag {
+  width: 20px;
+  height: 14px;
+}
+
+.language-selector__menu,
+.language-selector__menu button {
+  font-family: var(--ui);
+}
+
+/* Computers and tablets: the "Professional email" label on the contact
+   page, larger and in the same lettering as "Enquiries" above the title */
+@media (min-width: 701px) {
+  .contact-page__methods a > span {
+    font-family: var(--body);
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+}
+
+/* Computers and tablets: the contact box tightened, with the opening line
+   on one line */
+@media (min-width: 701px) {
+  .contact-page__body {
+    padding-block: clamp(28px, 2.6vw, 38px);
+  }
+
+  .contact-page__body .contact-page__lede {
+    max-width: none;
+    margin-bottom: 18px;
+    font-size: clamp(1rem, 1.25vw, 1.15rem);
+    white-space: nowrap;
+  }
+
+  .contact-page__body .contact-page__methods {
+    margin-bottom: 24px;
+  }
+
+  .contact-page__body .contact-page__methods a {
+    padding-block: 8px;
+  }
+
+  .contact-page__body .contact-form {
+    margin-top: 16px;
+    gap: 12px;
+  }
+
+  .contact-page__body .contact-form textarea {
+    min-height: 140px;
+    height: 140px;
+  }
+
+  .contact-page__body .contact-page__privacy {
+    margin-top: 18px;
+  }
+}
+
+/* Laptops and tablets: in the slide-out menu, the logo 5px lower and no
+   roles line under it */
+@media (min-width: 701px) {
+  .drawer .drawer__top .drawer__name {
+    transform: translateY(5px);
+  }
+
+  .drawer .drawer__roles {
+    display: none;
+  }
+}
+
+/* Laptops and tablets, every page: the footer icons on one line at the
+   smaller size, level with the contact email, with less space around them */
+@media (min-width: 701px) {
+  .legal-footer {
+    align-items: center;
+    padding-top: 22px;
+    padding-bottom: 18px;
+    row-gap: 18px;
+  }
+
+  .legal-footer .legal-footer__copy {
+    align-self: center;
+  }
+
+  .legal-footer .legal-footer__contact {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .legal-footer .legal-footer__socials {
+    grid-template-columns: repeat(8, 36px);
+    align-self: center;
+    gap: 0 6px;
+  }
+
+  .legal-footer .legal-footer__socials a {
+    width: 36px;
+    height: 36px;
+  }
+
+  .legal-footer .legal-footer__socials .drawer__social-logo {
+    width: 18px;
+  }
+}
+
+/* Laptops: the showreel frame centred at every width, including wide
+   screens where it reaches its largest size */
+@media (min-width: 701px) {
+  .hero .hero__frame {
+    width: min(100%, calc((100svh - clamp(18px, 2.8vw, 42px) * 2 - 62px) * 16 / 9));
+    margin-inline: auto;
+  }
+}

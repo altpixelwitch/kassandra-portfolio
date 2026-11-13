@@ -1,0 +1,114 @@
+.template-default {
+  --theme-success-500: #50c878;
+}
+
+.kass-dashboard {
+  margin-bottom: 3rem;
+}
+
+.kass-dashboard__welcome {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(80, 200, 120, 0.25);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(80, 200, 120, 0.13), transparent 42%), #151311;
+  color: #f4eee5;
+}
+
+.kass-dashboard__welcome p,
+.kass-dashboard__welcome span {
+  margin: 0;
+  color: #91dfa9;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.kass-dashboard__welcome h1 {
+  margin: 0.65rem 0 1rem;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 0.95;
+}
+
+.kass-dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.kass-dashboard__card {
+  display: flex;
+  min-height: 9rem;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.4rem;
+  border: 1px solid var(--theme-elevation-150);
+  border-radius: 1.25rem;
+  background: var(--theme-elevation-50);
+  color: var(--theme-text);
+  text-decoration: none;
+  transition:
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.kass-dashboard__card:hover,
+.kass-dashboard__card:focus-visible {
+  border-color: #50c878;
+  transform: translateY(-2px);
+}
+
+.kass-dashboard__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  flex: 0 0 auto;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(80, 200, 120, 0.12);
+  color: #50c878;
+}
+
+.kass-dashboard__icon svg {
+  width: 1.45rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.6;
+}
+
+.kass-dashboard__card strong,
+.kass-dashboard__card small {
+  display: block;
+}
+
+.kass-dashboard__card strong {
+  margin-bottom: 0.55rem;
+  font-size: 1.15rem;
+}
+
+.kass-dashboard__card small {
+  color: var(--theme-elevation-600);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.kass-dashboard__workflow {
+  margin: 1.25rem 0 0;
+  padding: 1rem 1.25rem;
+  border-left: 3px solid #50c878;
+  background: var(--theme-elevation-50);
+}
+
+@media (max-width: 720px) {
+  .kass-dashboard__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .kass-dashboard__card {
+    min-height: 0;
+  }
+}
