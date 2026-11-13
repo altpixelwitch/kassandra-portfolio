@@ -116,4 +116,8 @@ authoritative legal translation. Google controls service availability and proces
 - Password recovery email is not configured. Payload currently reports that it would write email to
   the server console; do not treat this as a usable recovery channel.
 
+
+
+  
+
 No additional paid service was introduced by this implementation. Railway hosting, PostgreSQL, volumes, and network usage remain subject to the selected Railway plan and terms.
