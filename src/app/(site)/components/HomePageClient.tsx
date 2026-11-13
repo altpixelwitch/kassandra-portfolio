@@ -302,7 +302,7 @@ export default function HomePageClient({
                         sizes="(min-width: 900px) 55vw, 100vw"
                       />
                     ) : (
-                      <div className="work__poster-empty">Poster TBA</div>
+                      <div className="work__poster-empty" aria-hidden="true" />
                     )}
                     <figcaption>
                       <span className="work__poster-credit">
